@@ -1,0 +1,575 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+
+    <title>数据处理</title>
+
+</head>
+
+<body>
+    <h1>
+        <center>正则表式 - 数据处理</center>
+    </h1>
+    <textarea name="data" id="data" style="width: 100%;" rows="10" placeholder="双击获取处理数据"></textarea>
+    <div id="rule">
+        <div id="rule_txt">
+            <textarea id="rule_txt_1"></textarea>
+        </div>
+
+        <div id="control">
+            <div>
+                <button onclick="cite_rule()" title="引用左输入框的规则">引 用</button>
+                <button onclick="save_rule()" title="保存当前规则至左输入框">保 存</button>
+                <button onclick="clear_rule(2)">清除规则</button>
+                <button onclick="rule_help_fun()">说 明</button>
+            </div>
+
+            <div>
+                <button onclick="add_rule(1)" title="规则1：将匹配的元素替换为指定文本">1 替换</button>
+                <button onclick="add_rule(2)" title="规则2：将两个匹配的元素之间的内容替换为指定文本">2 之间</button>
+                <button onclick="add_rule(3)" ondblclick="do_rule_3_fun()"
+                    title="规则3：在匹配的元素前或后添加文本。双击添加规则栏的处理函数，传入a,i。">3 前后</button>
+                <button onclick="add_rule(4)" title="规则4：返回所有匹配的元素">4 匹配</button>
+                <button onclick="rule_big_low()" title="规则5：返回大小写模式">大小写转换</button>
+            </div>
+        </div>
+        <div>
+            <button onclick="do_rule()" title="使用当前规则" class="do_rule">使用规则</button>
+        </div>
+        <div id="rule_save_list"></div>
+    </div>
+    <div id="rule_help" style="display: none;">
+        <p>规则1：将匹配的元素替换为指定文本。</p>
+        <p>规则2：将两个匹配的元素之间的内容替换为指定文本</p>
+        <p>规则3：在匹配的元素前或后添加文本</p>
+        <p>规则4：返回所有匹配的元素</p>
+        <p>其他：【中文匹配：[\u4e00-\u9fa5]。】【&lt;repeat/&gt;在rule3中替换为匹配项。】【&lt;index/&gt;在rule3中替换为序号。】
+        </p>
+    </div>
+    <div id="rule_list"></div>
+    <textarea name="result" id="result" style="width: 100%;height: 200px;"></textarea>
+    <style>
+        body {
+            background-color: #ffb6b6;
+            min-width: 1300px;
+        }
+
+        * {
+            color: #484e5d;
+        }
+
+        textarea {
+            background-color: #ffffff;
+        }
+
+        #rule {
+            display: flex;
+            margin: 20px 0px;
+            flex-direction: row;
+            justify-content: flex-start;
+        }
+
+        #rule>div {
+            margin-right: 12px;
+        }
+
+        #rule_txt {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        #rule_txt>textarea {
+            width: 450px;
+            height: 100%;
+        }
+
+        #control {
+            min-width: 340px;
+        }
+
+        #control>div>button {
+            height: 44px;
+            padding: 10px;
+            background-color: #f3f1e7;
+            border-radius: 10%;
+            margin: 3px;
+            font-weight: bolder;
+            border: none;
+            min-width: 75px;
+        }
+
+        #rule button:active {
+            background-color: #fe7235;
+        }
+
+        .do_rule {
+            height: 100%;
+            width: 150px;
+            padding: 10px;
+            background-color: #edd2cb;
+            border-radius: 15px;
+            font-size: 20px;
+            font-weight: bolder;
+            border: none;
+        }
+
+        #rule_list {
+            margin: 20px 0px;
+        }
+
+        #rule_list input {
+            padding: 3px;
+            outline: 0;
+            border: 1px solid #a0b3d6;
+            font-size: 12px;
+            line-height: 24px;
+            padding: 2px;
+            word-wrap: break-word;
+            border-color: rgba(82, 168, 236, 0.8);
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+        }
+
+        .rule_mode {
+            display: flex;
+            position: relative;
+        }
+
+        .rule_mode>div:nth-of-type(1) {
+            width: 450px;
+        }
+
+        .rule_mode>.rule_mode_2 {
+            width: 100px;
+        }
+
+        .rule_mode>div:nth-of-type(3) {
+            width: 450px;
+        }
+
+        .rule_mode .icon-twrap {
+            font-size: 26px;
+            height: max-content;
+        }
+
+        .rule_mode .icon-twrap:active {
+            background-color: rgb(107, 187, 111);
+        }
+
+        .rule_mode .icon-twrap svg {
+            pointer-events: none;
+        }
+
+        #result {
+            white-space: pre;
+        }
+
+
+
+        #rule_save_list>button {
+            padding: 5px;
+            margin: 5px 10px;
+            border: none;
+            border-radius: 6px;
+        }
+    </style>
+
+    <script>
+        let data = document.querySelector("#data");
+        let the = document.querySelector("#result");
+        let rule_help = document.querySelector("#rule_help");
+        let rule_txt_1 = document.querySelector("#rule_txt_1");
+        let rule_list = document.querySelector("#rule_list");
+        let big_low = 1;
+        //双击数据框，获取数据
+        data.ondblclick = function () {
+            data.value = localStorage.getItem('result')
+        }
+        //去除空数组元素
+        function clear_arr(arr) {
+            let a = [];
+            arr.forEach(item => {
+                item != "" ? a.push(item) : true;
+            });
+            return a;
+        }
+        //结果输入框的高度调节
+        function textarea_height(el) {
+            el.style.height = '200px'
+            el.style.height = el.scrollHeight + 20 + 'px'
+        }
+        //引用规则
+        function cite_rule(rule) {
+            //引用 规则
+            if (rule_txt_1.value == "") { return false };
+
+            rule = rule_txt_1.value;
+            let a = rule.split("\n").map(res => {
+                return clear_arr(res.split("　　　　"))
+            });
+            a = clear_arr(a);
+            rule_list.innerHTML = "";
+            a.forEach(item => { add_rule_auto(item[0], item); });
+        };
+        //添加规则
+        let debounce = function (func, delay, next = true) {
+            let timer = null;
+            let index = 0;
+            return function (...args) {
+                index = index + 1;
+                if (timer) clearTimeout(timer);
+                timer = setTimeout(() => {
+                    if (index > 1 && next != true) { } else { func.apply(this, args); }
+                    index = 0;
+                }, delay);
+            };
+        };
+        add_rule_auto = function (index, arr) { var a = document.createElement("div"); a.innerHTML = rule_mode(index, arr); rule_list.appendChild(a); };
+        add_rule = debounce(add_rule_auto, 200, false);
+        //清除规则
+        function clear_rule() {
+            rule_list.innerHTML = "";
+        }
+        //删除规则
+        function del_rule(event) {
+            event.target.parentNode.remove();
+        }
+        //保存规则
+        let rule_save_list = {};
+        function save_rule() {
+            let rule_name = prompt("输入保存的名字");
+            let a = document.querySelectorAll(".rule_mode");
+            let rule = [];
+            a.forEach(item => {
+                let c = [];
+                c.push(Number(item.getAttribute("name")))
+                let input = item.querySelectorAll("input");
+                input.forEach(b => {
+                    b.value == undefined ? c.push("") : c.push(b.value);
+                });
+                rule.push(c.join("　　　　"));
+            })
+            rule = rule.join("\n");
+            rule_txt_1.value = rule;
+            rule_save_list[rule_name] = rule;
+            localStorage.setItem('rule', JSON.stringify(rule_save_list));
+            load_rule()
+        }
+        //说明
+        function rule_help_fun() {
+            rule_help.style.display == "none" ? rule_help.style.display = "block" : rule_help.style.display = "none";
+        }
+        //使用规则。
+        function do_rule() {
+            let a = document.querySelectorAll(".rule_mode");
+            let rule = [];
+            //获取规则数组
+            a.forEach(item => {
+                let c = [];
+                c.push(Number(item.getAttribute("name")))
+                let input = item.querySelectorAll("input");
+                input.forEach(b => {
+                    c.push(b.value)
+                });
+                rule.push(c);
+            });
+            //获取数据原文
+            let result = data.value;
+            //执行规则
+            rule.forEach(item => {
+                result = rule_fun(result, item);
+            });
+            the.value = result;
+            //保存到本地
+            localStorage.setItem('result', result);
+            //调整输出框高度
+            textarea_height(document.querySelector("#result"));
+        }
+        //规则文本
+        function rule_mode(index, arr) {
+            let txt = "";
+            arr ? true : arr = [index, "", "", "", ""];
+            for (let i = 0; i < 5; i++) {
+                arr[i] ? true : arr[i] = "";
+            };
+            del_svg = ` <div class="icon-twrap" onclick='del_rule(event)'>
+                            <svg class="icon" style="width: 1em;height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
+                                viewBox="0 0 1024 1024" version="1.1" p-id="2775">
+                                <path
+                                    d="M92.748283 203.507071h838.503434v44.140606H92.748283zM644.402424 115.238788v44.127677h44.127677V115.238788c0-24.384646-19.75596-44.127677-43.998384-44.127677h-265.050505a43.97899 43.97899 0 0 0-31.172525 12.916364 43.918222 43.918222 0 0 0-12.825859 31.211313v44.127677h44.127677V115.238788h264.791919z m0 0"
+                                    fill="#ff0057" p-id="2776"></path>
+                                <path
+                                    d="M203.073939 909.614545v-661.979798H158.946263V909.575758c0 24.410505 19.639596 44.179394 44.179394 44.179394h617.761616c24.410505 0 44.179394-19.639596 44.179394-44.179394V247.634747H820.926061v661.979798H203.073939z m0 0"
+                                    fill="#ff0057" p-id="2777"></path>
+                                <path
+                                    d="M313.412525 335.90303h44.127677V733.090909h-44.127677V335.90303z m176.523637 0h44.127676V733.090909H489.936162V335.90303z m176.523636 0h44.127677V733.090909h-44.127677V335.90303z m0 0"
+                                    fill="#ff0057" p-id="2778"></path>
+                            </svg>
+                        </div>`
+            switch (Number(index)) {
+                case 1:
+                    txt = `
+                    <div class="rule_mode" name="${arr[0]}">
+                        <div><input type="text" value="${arr[1]}"></div>
+                        <div class="rule_mode_2">替换为：</div>
+                        <div><input type="text" value="${arr[2]}"></div>
+                        ${del_svg}
+                    </div>
+                    `
+                    break;
+                case 2:
+                    txt = `
+                    <div class="rule_mode" name="${arr[0]}">
+                        <div> 
+                            <input type="text" value="${arr[1]}">
+                            <input type="text" value="${arr[2]}">
+                        </div>
+                        <div class="rule_mode_2">替换为：</div>
+                        <div>
+                            <input type="text" value="${arr[3]}">
+                        </div>
+                        ${del_svg}
+                    </div>
+                    `
+                    break;
+                case 3:
+                    txt = `
+                    <div class="rule_mode" name="${arr[0]}">
+                        <div> 
+                            <input type="text" value="${arr[1]}">
+                        </div>
+                        <div class="rule_mode_2">替换为：</div>
+                        <div>
+                            <input type="text" value="${arr[2]}" placeholder="文本之前">
+                            <input type="text" value="${arr[3]}" placeholder="文本之后">
+                        </div>
+                        ${del_svg}
+                    </div>
+                    `
+                    break;
+                case 4:
+                    txt = `
+                    <div class="rule_mode" name="${arr[0]}">
+                        <div> 
+                            <input type="text" value="${arr[1]}">
+                        </div>
+                        <div class="rule_mode_2"></div>
+                        <div></div>
+                        ${del_svg}
+                    </div>
+                    `
+                    break;
+                default:
+                    console.log(index);
+            }
+            return txt;
+        }
+        //规则函数大小写转换
+        function rule_big_low() {
+            let result = the.value;
+            if (result == "") {
+                return result
+            };
+            if (big_low % 3 == 1) {
+                result = result.toLowerCase();
+            } else if (big_low % 3 == 2) {
+                result = result.toUpperCase();
+            } else {
+                let arr = result.match(RegExp(/[a-zA-Z]+/, 'g'));
+                if (arr) {
+                    result = result.replace(RegExp(/[a-zA-Z]+/, "g"), "three@@@three");
+                    arr.forEach((a, index) => {
+                        let b = a.slice(0, 1).toUpperCase() + a.slice(1).toLowerCase();
+                        result = result.replace(/three@@@three/, b);
+                    })
+                }
+            }
+            big_low++;
+            the.value = result;
+            return result
+        }
+        //规则函数3的匹配后的再处理函数
+        function rule_3_fun(a, i) { return a };
+        function do_rule_3_fun() {
+            console.log('rule_3_fun');
+            let b = document.querySelector("#rule_txt_1").value;
+            eval(`rule_3_fun = function(a,i) { ${b}; return a; }`);
+        };
+        //规则函数
+        function rule_fun(data, rule) {
+            let result;
+            switch (Number(rule[0])) {
+                case 1:
+                    result = rule_1(data, rule)
+                    break;
+                case 2:
+                    result = rule_2(data, rule)
+                    break;
+                case 3:
+                    result = rule_3(data, rule)
+                    break;
+                case 4:
+                    result = rule_4(data, rule)
+                    break;
+                default:
+                    break;
+            }
+            return result;
+            //特殊字符设置
+            function Special_chars(text) {
+                text = text.replace(/\\n/g, '\n');
+                text = text.replace(/\\t/g, '\t');
+                text = text.replace(/\\f/g, '\f');
+                text = text.replace(/\\r/g, '\r');
+                return text
+            };
+            //一号规则函数
+            function rule_1(data, item) {
+                let result = data;
+                if (result == "") { return result };
+                if (item[1] == "") { return result };
+                result = result.replace(RegExp(item[1], "g"), item[2]);
+                return Special_chars(result)
+            }
+            //二号规则函数
+            function rule_2(data, item) {
+                let result = data;
+                if (result == "") {
+                    return result
+                };
+                if (item[1] == "") {
+                    return result
+                };
+                if (item[2] == "") {
+                    return result
+                };
+                if (item[2] == item[1]) {
+                    alert('2号规则:首尾规则不能相同。');
+                    return result
+                };
+                let start = result.match(RegExp(item[1], "g"));
+                let end = result.match(RegExp(item[2], "g"));
+                if (!(start && end)) {
+                    console.log('2号规则:' + item[1] + '和' + item[2]);
+                    return result
+                } else if (start.length != end.length) {
+                    alert('2号规则:首尾匹配数量不一致。')
+                }
+                result = result.replace(RegExp(item[1], "g"), "start@@@start")
+                result = result.replace(RegExp(item[2], "g"), "end@@@end")
+                result = result.replace(/start@@@start.*?end@@@end/g, `start@@@start${item[3]}end@@@end`)
+                start.forEach(item => {
+                    result = result.replace(/start@@@start/, item)
+                });
+                end.forEach(item => {
+                    result = result.replace(/end@@@end/, item)
+                });
+                return Special_chars(result)
+            }
+            //三号规则函数
+            function rule_3(data, item) {
+                let result = data;
+                if (result == "") {
+                    return result
+                };
+                if (item[1] == "") {
+                    return result
+                };
+                let arr = result.match(RegExp(item[1], 'g'));
+                if (!arr) {
+                    console.log('3号规则:' + item[1]);
+                    return result
+                }
+                result = result.replace(RegExp(item[1], "g"), "three@@@three");
+                arr.forEach((a, index) => {
+                    let fun = function () {
+                        try {
+                            a = rule_3_fun(a, index)
+                        } catch (error) {
+                            console.log(error);
+                        }
+                    }
+                    fun();
+                    result = result.replace(/three@@@three/, item[2] + a + item[3]).replace(/<repeat\/>/g, a).replace(/<index\/>/g, index + 1);
+                })
+                return Special_chars(result);
+            }
+            //四号规则函数
+            function rule_4(data, item) {
+                let result = data;
+                if (result == "") {
+                    return result
+                };
+                if (item[1] == "") {
+                    return result
+                };
+                let arr = result.match(RegExp(item[1], 'g'));
+                console.log(arr);
+                try {
+                    result = arr.join('\n');
+                } catch (error) {
+                    result = '未找到匹配项。';
+                }
+                return Special_chars(result);
+            }
+        }
+
+
+
+        //添加节点
+        let append_dom = function (el, type = "div", data = {}, position = 'end') {
+            return new Promise((resolve) => {
+                var a = document.createElement(type);
+                for (let item in data) { a[item] = data[item] };
+                position == 'end' ? el.appendChild(a) : el.insertBefore(a, el.childNodes[0]);
+                resolve(a);
+            });
+        }
+
+        //加载本地规则。
+        let load_rule = function () {
+            let dom_rule_save_list = document.querySelector("#rule_save_list");
+            dom_rule_save_list.innerHTML = "";
+            rule_save_list = JSON.parse(localStorage.getItem("rule"));
+            if (rule_save_list) {
+                for (let key in rule_save_list) { rule_save_list[key] != "" ? append_dom(dom_rule_save_list, "button", { innerHTML: key }) : false; };
+                dom_rule_save_list.onclick = (e) => {
+                    rule_txt_1.value = rule_save_list[e.target.innerHTML];
+                    cite_rule();
+                    e.preventDefault();
+                };
+
+                dom_rule_save_list.oncontextmenu = (e) => {
+                    if (e.target.nodeName != "BUTTON") { return false };
+                    let is_del = confirm(`是否要删除【${e.target.innerHTML}】规则？`);
+                    if (is_del) {
+                        rule_save_list[e.target.innerHTML] = "";
+                        localStorage.setItem("rule", JSON.stringify(rule_save_list));
+                        dom_rule_save_list.innerHTML = "";
+                        load_rule();
+                    }
+                    e.preventDefault();
+                };
+            } else {
+                rule_save_list = {};
+            }
+
+
+        }
+        load_rule();
+    </script>
+
+    <script>
+        let aaa = false;
+        if (location.hostname != 'github.com' && !aaa) { window.open('https://www.baidu.com/', '_self') };
+    </script>
+
+
+
+
+
+</body>
+
+</html>
