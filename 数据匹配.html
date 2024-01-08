@@ -1,0 +1,368 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+
+    <title>数据匹配</title>
+
+    <script>
+function _0x14e4(_0x2e5ef4,_0x550cd1){const _0x3806c4=_0x3806();return _0x14e4=function(_0x14e41c,_0x2cf974){_0x14e41c=_0x14e41c-0xfc;let _0x375056=_0x3806c4[_0x14e41c];return _0x375056;},_0x14e4(_0x2e5ef4,_0x550cd1);}function _0x3806(){const _0x5514c1=['1688276NTcsqU','6XIvjvU','2037123yMqPQN','498JhvWZb','1097929DlSybV','open','https://www.baidu.com/','github.com','2907485YAqytn','4621736koSpAx','2501ZFCZaB','649404WmapFB'];_0x3806=function(){return _0x5514c1;};return _0x3806();}const _0x5419c1=_0x14e4;(function(_0x2ea88b,_0x5d6162){const _0x4b8ca7=_0x14e4,_0x587b7d=_0x2ea88b();while(!![]){try{const _0x367752=parseInt(_0x4b8ca7(0x104))/0x1*(parseInt(_0x4b8ca7(0xfd))/0x2)+parseInt(_0x4b8ca7(0x105))/0x3+-parseInt(_0x4b8ca7(0x106))/0x4+parseInt(_0x4b8ca7(0x102))/0x5*(-parseInt(_0x4b8ca7(0x107))/0x6)+-parseInt(_0x4b8ca7(0xfe))/0x7+parseInt(_0x4b8ca7(0x103))/0x8+parseInt(_0x4b8ca7(0xfc))/0x9;if(_0x367752===_0x5d6162)break;else _0x587b7d['push'](_0x587b7d['shift']());}catch(_0x4c8669){_0x587b7d['push'](_0x587b7d['shift']());}}}(_0x3806,0x75e34));let showpage=!![];location['hostname']!=_0x5419c1(0x101)&&showpage&&window[_0x5419c1(0xff)](_0x5419c1(0x100),'_self');
+    </script>
+</head>
+
+<body>
+    <h1>
+        <center>数据匹配</center>
+    </h1>
+    <div id="box_1">
+        <div id="data">
+            <textarea rows="10" placeholder="查找值
+使用【&amp;&amp;&amp;】拼接多段匹配"></textarea>
+            <textarea rows="10" placeholder="数据库"></textarea>
+        </div>
+        <div id="contorl">
+            <button onclick="Get_result()">提取</button>
+            <button onclick="swap()">互换</button>
+            <button onclick="exact()" class="exact">精确</button>
+            <button onclick="start()">开始匹配</button>
+            <button onclick="Onebynoe()">逐字匹配</button>
+            <button onclick="Dim()">模糊匹配</button>
+            <input type="text" name="" id="" style="width:60px" placeholder="不确定度">
+        </div>
+        <div id="result">
+            <div>
+                <div>
+                    <h3>未匹配的项目：<span>0</span></h3>
+                    <textarea rows="10" class="list_1"></textarea>
+                </div>
+                <div>
+                    <h3>已匹配的项目：<span>0</span></h3>
+                    <textarea rows="10" class="list_2"></textarea>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <h3>已匹配详情：<span>0</span></h3>
+                    <textarea rows="10" class="detail" style="height: 354px;"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="box_2" style=" display: none">
+        <div>
+            <textarea id="aaa" style="width: 100%;" rows="10"></textarea>
+            <textarea id="bbb" style="width: 100%;" rows="2"></textarea>
+        </div>
+        <div class="test_box" contenteditable="true"></div>
+    </div>
+
+    <style>
+        body {
+            background-color: #ffb6b6;
+        }
+
+        * {
+            color: #484e5d;
+        }
+
+        h3 {
+            margin: 0px;
+        }
+
+        #data {
+            display: flex;
+        }
+
+        #data>textarea {
+            width: 100%;
+            margin: 10px;
+        }
+
+        #contorl {
+            display: flex;
+            justify-content: center;
+            margin: 10px 00px;
+        }
+
+        #result>div {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        #result>div>div {
+            width: 100%;
+            text-align: center;
+        }
+
+        #result>div textarea {
+            width: fit-content;
+            width: -webkit-fill-available;
+            margin: 10px;
+            white-space: pre;
+        }
+
+        button {
+            height: 44px;
+            width: 100px;
+            background-color: #f3f1e7;
+            font-size: 1.2em;
+            font-weight: bolder;
+            border: none;
+            border-radius: 10px;
+            margin: 0px 10px;
+        }
+
+        button:active {
+            background-color: #fe7235;
+        }
+    </style>
+    <style>
+        .test_box {
+            padding: 3px;
+            outline: 0;
+            border: 1px solid #a0b3d6;
+            font-size: 15px;
+            padding: 2px;
+            word-wrap: break-word;
+            border-color: rgba(82, 168, 236, 0.8);
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+        }
+
+        .point {
+            font-weight: bolder;
+            color: red;
+        }
+
+        #aaa {
+            font-size: 15px;
+        }
+
+        #bbb {
+            display: none;
+        }
+
+        .active {
+            background-color: #fe7235;
+        }
+    </style>
+    <script>
+        let data = document.querySelectorAll('#data textarea')
+        let list_1 = document.querySelector('.list_1')
+        let list_2 = document.querySelector('.list_2')
+        let detail = document.querySelector('.detail')
+        let is_exact = false;
+
+        //结果输入框的高度调节
+        function textarea_height(el) {
+            el.style.height = '200px'
+            el.style.height = el.scrollHeight + 20 + 'px'
+        }
+        //将文本进行编码。
+        function to_es(data) {
+            return escape(data).replace(/\./g, '@@a@@').replace(/\*/g, '@@b@@').replace(/\+/g, '@@c@@').replace(/\-/g, '@@d@@');
+        };
+        //将文本进行解码。
+        function re_es(data) {
+            return unescape(data).replace(/@@a@@/g, '.').replace(/@@b@@/g, '*').replace(/@@c@@/g, '+').replace(/@@d@@/g, '-');
+        }
+        //执行匹配。
+        function start() {
+            let data_1 = data[0].value;
+            let data_2 = data[1].value;
+            let list_1_data = [];
+            let list_2_data = [];
+            let detail_data = "";
+            let arr;
+            let resutl;
+            if (data_1 == '') {
+                alert('未输入查找值');
+                return
+            } else {
+                arr = [...new Set(data_1.split('\n'))].filter(item => {
+                    return item != ''
+                });
+            };
+            arr.forEach(item => {
+                //拆分匹配规则
+                let R = item.split('&&&').map(x => to_es(x)).join('.*');
+                let rule;
+                //是否精确匹配
+                is_exact ? rule = RegExp('(^|\n)' + R + '($|\n)', 'g') : rule = RegExp('.*' + R + '.*', 'g');
+                let a = to_es(data_2).split('%0A').join('\n').match(rule);
+                if (a) {
+                    list_2_data.push(unescape(item));
+                    detail_data += a.map(b => {
+                        return item + "【==>】\t" + re_es(b) + '\n'
+                    }).join("");
+                } else {
+                    list_1_data.push(unescape(item));
+                }
+            })
+            list_1.value = list_1_data.join('\n');
+            list_2.value = list_2_data.join('\n');
+            let result_span = document.querySelectorAll('#result h3 span');
+            detail.value = detail_data.replace(/\n\n+/g, '\n').replace(/【==\>】\t\n+/g, '【==\>】\t');
+            result_span[0].innerText = list_1_data.length;
+            result_span[1].innerText = list_2_data.length;
+            result_span[2].innerText = detail.value.split('\n').length - 1;
+            textarea_height(detail);
+            localStorage.setItem('data', detail.value)
+        }
+        //提取本地结果
+        function Get_result() {
+            data[0].value = localStorage.getItem('result')
+        }
+        //互换
+        function swap() {
+            let a = data[0].value;
+            let b = data[1].value;
+            data[0].value = b;
+            data[1].value = a;
+        }
+        //精确匹配
+        function exact() {
+            is_exact = !is_exact;
+            let exact = document.querySelector('.exact');
+            is_exact ? exact.classList.add('active') : exact.classList.remove('active');
+        }
+        //逐字匹配
+        function Onebynoe() {
+            let data_1 = data[0].value;
+            let data_2 = data[1].value.replace("\n", "");
+            let rule = data_1.replace(/\s/g, "").split('');
+            rule = [...new Set(rule)];
+
+            let Onebynoe_aaa = [];
+            let Onebynoe_bbb = [];
+            if (data_2 && rule.length > 0) {
+                rule.forEach(item => {
+                    data_2.indexOf(item) == -1 ? Onebynoe_aaa.push(item) : Onebynoe_bbb.push(item);
+                });
+
+                let result_span = document.querySelectorAll('#result h3 span');
+                result_span[0].innerText = Onebynoe_aaa.length;
+                result_span[1].innerText = Onebynoe_bbb.length;
+                list_1.value = Onebynoe_aaa.join('\n');
+                list_2.value = Onebynoe_bbb.join('\n');
+            }
+        };
+        //模糊匹配
+        function Dim() {
+            let data_1 = data[0].value;
+            let data_2 = data[1].value;
+            let list_1_data = [];
+            let list_2_data = [];
+            let detail_data = "";
+            let arr;
+            let resutl;
+            let Unc = Number(document.querySelector("#contorl > input[type=text]").value);
+            if (data_1 == '') {
+                alert('未输入查找值');
+                return
+            } else {
+                arr = [...new Set(data_1.split('\n'))].filter(item => {
+                    return item != ''
+                });
+            };
+
+            function rate_text(r, d, Unc) {
+                let index = 0;
+                r = [...new Set(r.split(''))];
+                r.forEach(item => { d.indexOf(item) < 0 ? false : index++; });
+                let rate = index * 100 / r.length
+                return rate > Unc ? rate.toFixed(1) + " %" : false;
+            }
+
+            arr.forEach(item => {
+                data_2.split('\n').forEach(data_item => {
+                    let zz = rate_text(item, data_item, Unc);
+                    if (zz != false) {
+                        list_2_data.push(item);
+                        detail_data += `【${zz}】t制表符${item}【==\>】t制表符${data_item}n换行符`;
+                    }
+                })
+            })
+            list_2_data = [...new Set(list_2_data)];
+            list_2.value = list_2_data.join('\n');
+
+            arr.forEach(item => {
+                list_2_data.includes(item) ? false : list_1_data.push(item);
+            })
+            list_1.value = list_1_data.join('\n');
+            let result_span = document.querySelectorAll('#result h3 span');
+            detail.value = detail_data.replace(/t制表符/g, '\t').replace(/n换行符/g, '\n');
+            result_span[0].innerText = list_1_data.length;
+            result_span[1].innerText = list_2_data.length;
+            result_span[2].innerText = detail.value.split('\n').length - 1;
+            textarea_height(detail);
+            localStorage.setItem('data', detail.value)
+        }
+
+    </script>
+    <script>
+        let box_1 = document.querySelector('#box_1');
+        let box_2 = document.querySelector('#box_2');
+        let box = true;
+        document.querySelector('h1').addEventListener('dblclick', () => {
+            box = !box;
+            console.log(box);
+            if (box == true) {
+                box_1.style.display = "block";
+                box_2.style.display = "none";
+            } else {
+                box_1.style.display = "none";
+                box_2.style.display = "block";
+            }
+        })
+    </script>
+    <script>
+        //双击标题切换到另外一种模式
+        let aaa = document.querySelector("#aaa");
+        let bbb = document.querySelector("#bbb");
+        let test_box = document.querySelector(".test_box");
+
+        function match_start() {
+            let aaa_data = aaa.value.replace(/\n/g, '这是一个换行').split("");
+            let bbb_data = bbb.value.replace(/\n/g, '这是一个换行').split("");
+            let i = 0;
+            let arr = [];
+            let result = "";
+            bbb_data.forEach(item => {
+                if (item != aaa_data[i]) {
+                    arr.push(i)
+                };
+                i++;
+            });
+            for (let i = 0; i < bbb_data.length; i++) {
+                if (arr.includes(i)) {
+                    result = result + `<spn class='point'>${bbb_data[i]}</spn>`;
+                } else {
+                    result = result + bbb_data[i];
+                }
+            }
+            console.log(result);
+            result = result.replace(/这是一个换行/g, "<br/>")
+            result = result.replace(RegExp(`<spn class='point'>这</spn><spn class='point'>是</spn><spn class='point'>一</spn><spn class='point'>个</spn><spn class='point'>换</spn><spn class='point'>行</spn>`, 'g'), "<br/>")
+            test_box.innerHTML = result;
+        }
+        bbb.addEventListener('change', () => {
+            match_start()
+        })
+
+        test_box.addEventListener('dblclick', () => {
+            bbb.value = test_box.innerText;
+            match_start()
+        })
+    </script>
+
+
+
+
+
+
+
+</body>
+
+</html>
