@@ -42,7 +42,7 @@
         <div id="rule_save_list"></div>
     </div>
     <div id="rule_help" style="display: none;">
-        <p>规则1：将匹配的元素替换为指定文本。规则后面写【 $i】则忽略大小写</p>
+        <p>规则1：将匹配的元素替换为指定文本。规则后面写【 $i】则忽略大小写。【&lt;i&gt; 为序号】</p>
         <p>规则2：获取符合筛选的结果</p>
         <p>规则3：写入函数，可直接运行。data为文本，file_name为文件名。</p>
         <p>其他：【中文匹配：[\u4e00-\u9fa5]。】
@@ -488,6 +488,10 @@
                 } else {
                     data = data.replace(RegExp(rule[1], 'g'), rule[2]);
                 }
+
+                let index = 1;
+                while (data.match(/<i>/)) { data = data.replace(/<i>/, index++) };
+
                 return data
             }
             //二号规则函数
