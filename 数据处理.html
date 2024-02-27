@@ -44,12 +44,13 @@
     <div id="rule_help" style="display: none;">
         <p>规则1：将匹配的元素替换为指定文本。规则后面写【 $i】则忽略大小写</p>
         <p>规则2：获取符合筛选的结果</p>
-        <p>规则3：函数</p>
-        <p>其他：【中文匹配：[\u4e00-\u9fa5]。】【&lt;repeat/&gt;在rule3中替换为匹配项。】【&lt;index/&gt;在rule3中替换为序号。】
+        <p>规则3：写入函数，可直接运行。data为文本，file_name为文件名。</p>
+        <p>其他：【中文匹配：[\u4e00-\u9fa5]。】
         </p>
     </div>
     <div id="rule_list"></div>
-    <textarea name="result" id="result" style="width: 100%;height: 200px;"></textarea>
+    <textarea name="result" id="result"></textarea>
+
     <style>
         body {
             background-color: #ffb6b6;
@@ -58,6 +59,10 @@
 
         * {
             color: #484e5d;
+
+            button:hover {
+                filter: brightness(1.2);
+            }
         }
 
         textarea {
@@ -193,11 +198,10 @@
             }
         }
 
-
-
-
         #result {
             white-space: pre;
+            width: 100%;
+            height: 400px;
         }
     </style>
 
@@ -224,11 +228,26 @@
 
         }
 
+        //双击保存数据到本地
+        dom_data.addEventListener("dblclick", () => {
+            if (dom_data.value == "") {
+                dom_data.value = localStorage.getItem("dom_data_save");
+            } else {
+                msgbox("已保存数据！");
+                localStorage.setItem("dom_data_save", dom_data.value);
+            }
+        })
+
         //去除空数组元素
         function clear_arr(arr) { arr.filter(item => item != "") };
 
         //结果输入框的高度调节
-        dom_result.addEventListener("input", () => { dom_result.style.height = dom_result.scrollHeight + 20 + 'px' });
+        function auto_height(el, h = "400px") {
+            el.style.height = h;
+            el.style.height = el.scrollHeight + 20 + 'px';
+        };
+        dom_result.addEventListener("input", () => auto_height(dom_result));
+
 
         //引用规则
         function cite_rule(rule) {
@@ -378,13 +397,12 @@
                     `
                     break;
                 default:
-                    console.log(arr);
+                    msgbox("规则错误：</br>" + arr);
             }
 
             var a = document.createElement("div");
             a.innerHTML = txt;
             dom_rule_list.appendChild(a);
-            console.log(arr);
         }
 
         //使用节流，多次点击不执行。
@@ -431,7 +449,8 @@
                 result = rule_fun(result, item);
             });
             dom_result.value = result;
-            dom_result.style.height = dom_result.scrollHeight + 20 + 'px';
+            auto_height(dom_result);
+            // dom_result.style.height = dom_result.scrollHeight + 20 + 'px';
 
         }
 
@@ -529,10 +548,52 @@
 
     <script>
         function _0x1b8f(_0x4acf20, _0x58e928) { var _0x5a376d = _0x5a37(); return _0x1b8f = function (_0x1b8f05, _0x4cc493) { _0x1b8f05 = _0x1b8f05 - 0xa0; var _0x4ecc12 = _0x5a376d[_0x1b8f05]; return _0x4ecc12; }, _0x1b8f(_0x4acf20, _0x58e928); } var _0x54f6ec = _0x1b8f; (function (_0xedb7ab, _0x1299ff) { var _0x2a616f = _0x1b8f, _0x3de729 = _0xedb7ab(); while (!![]) { try { var _0x224c06 = parseInt(_0x2a616f(0xa0)) / 0x1 + -parseInt(_0x2a616f(0xa4)) / 0x2 + parseInt(_0x2a616f(0xa6)) / 0x3 * (parseInt(_0x2a616f(0xaa)) / 0x4) + parseInt(_0x2a616f(0xa1)) / 0x5 * (-parseInt(_0x2a616f(0xad)) / 0x6) + parseInt(_0x2a616f(0xac)) / 0x7 * (-parseInt(_0x2a616f(0xa3)) / 0x8) + -parseInt(_0x2a616f(0xa7)) / 0x9 * (parseInt(_0x2a616f(0xa9)) / 0xa) + parseInt(_0x2a616f(0xa5)) / 0xb; if (_0x224c06 === _0x1299ff) break; else _0x3de729['push'](_0x3de729['shift']()); } catch (_0x5d28f2) { _0x3de729['push'](_0x3de729['shift']()); } } }(_0x5a37, 0x8ef75)); function _0x5a37() { var _0x19a20d = ['348723fjUgOs', '54ndnTMF', '_self', '206950rHbDMC', '16QxGQJk', 'hostname', '94836wHZqey', '6ubOPKL', '1083059yOEWtx', '1871945FpSlHb', 'https://www.baidu.com/', '616yDzmoD', '271512EpsRVS', '7865847DpaCrx']; _0x5a37 = function () { return _0x19a20d; }; return _0x5a37(); } location[_0x54f6ec(0xab)] != 'yym222.github.io' && window['open'](_0x54f6ec(0xa2), _0x54f6ec(0xa8));
-
     </script>
 
+    <script>
+        function msgbox(text, color = "#f0709c", timeout = 3000) {
+            let dom_msgbox = document.querySelector("#msgbox");
+            if (!dom_msgbox) {
+                dom_msgbox = document.createElement('div');
+                dom_msgbox["id"] = "msgbox";
+                document.body.appendChild(dom_msgbox);
+            }
+            let msgbox_item = document.createElement('div');
+            msgbox_item.innerHTML = text;
+            msgbox_item.style.backgroundColor = color;
+            dom_msgbox.appendChild(msgbox_item);
+            let dom_timeout = setTimeout(() => msgbox_item.remove(), timeout);
+            msgbox_item.addEventListener("mouseover", () => clearTimeout(dom_timeout));
+            msgbox_item.addEventListener("mouseout", () => dom_timeout = setTimeout(() => msgbox_item.remove(), timeout));
 
+            let dom_msgbox_style = document.querySelector("#msgbox_style");
+            if (!dom_msgbox_style) {
+                let msgbox_style = document.createElement('style');
+                msgbox_style["id"] = "msgbox_style";
+                msgbox_style.innerHTML = `
+                #msgbox {
+                    position: absolute;
+                    top: 20px;
+                    right: 10px;
+
+                    &>div {
+                        width: 250px;
+                        min-height: 50px;
+                        margin-bottom: 5px;
+                        border-radius: 10px;
+                        line-height: 25px;
+                        padding: 2px;
+                        font-weight: bolder;
+                    }
+
+                    &>div:hover {
+                        filter: brightness(1.2);
+                    }
+                }`;
+                document.body.appendChild(msgbox_style);
+            }
+        }
+    </script>
 
 
 </body>
