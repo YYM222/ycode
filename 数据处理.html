@@ -14,7 +14,7 @@
     <h1>
         <center>正则表式 - 数据处理</center>
     </h1>
-    <textarea name="data" id="data" style="width: 100%;" rows="10" placeholder="双击获取处理数据"
+    <textarea name="data" id="data" style="width: 100%;" rows="10" placeholder="双击保存处理数据，右右键清除数据。"
         ondrop="Drop_file(event)"></textarea>
     <div id="rule">
         <div id="rule_txt">
@@ -228,7 +228,7 @@
 
         }
 
-        //双击保存数据到本地
+        //双击保存数据到本地,右键清除数据。
         dom_data.addEventListener("dblclick", () => {
             if (dom_data.value == "") {
                 dom_data.value = localStorage.getItem("dom_data_save");
@@ -236,6 +236,10 @@
                 msgbox("已保存数据！");
                 localStorage.setItem("dom_data_save", dom_data.value);
             }
+        })
+        dom_data.addEventListener("contextmenu", (e) => {
+            e.preventDefault()
+            dom_data.value = "";
         })
 
         //去除空数组元素
