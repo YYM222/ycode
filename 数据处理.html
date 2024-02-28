@@ -285,10 +285,12 @@
             dom_rule_save_list.innerHTML = "";
             rule_save_list = JSON.parse(localStorage.getItem("rule"));
             if (rule_save_list) {
-                for (let key in rule_save_list) { rule_save_list[key] != "" ? append_dom(dom_rule_save_list, "button", { innerHTML: key }) : false; };
+                for (let key in rule_save_list) { append_dom(dom_rule_save_list, "button", { innerHTML: key }) };
                 dom_rule_save_list.onclick = (e) => {
-                    rule_txt_1.value = rule_save_list[e.target.innerHTML];
-                    cite_rule();
+                    if (e.target.tagName == 'BUTTON') {
+                        dom_rule_txt_1.value = rule_save_list[e.target.innerHTML];
+                        cite_rule();
+                    }
                     e.preventDefault();
                 };
 
@@ -296,15 +298,12 @@
                     if (e.target.nodeName != "BUTTON") { return false };
                     let is_del = confirm(`是否要删除【${e.target.innerHTML}】规则？`);
                     if (is_del) {
-                        rule_save_list[e.target.innerHTML] = "";
+                        delete rule_save_list[e.target.innerHTML];
                         localStorage.setItem("rule", JSON.stringify(rule_save_list));
-                        dom_rule_save_list.innerHTML = "";
                         load_rule();
                     }
                     e.preventDefault();
                 };
-            } else {
-                rule_save_list = {};
             }
         }
         load_rule();
@@ -319,6 +318,7 @@
 
             dom_rule_txt_1.value = rule;
             rule_save_list[rule_name] = rule;
+            for (let key in rule_save_list) { rule_save_list[key] == "" ? delete rule_save_list[key] : true };
             localStorage.setItem('rule', JSON.stringify(rule_save_list));
             load_rule();
         }
