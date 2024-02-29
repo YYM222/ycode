@@ -177,9 +177,9 @@
             &>.rule_mode_2 {
                 width: 100px;
                 text-align: center;
+                line-height: 30px;
+                font-weight: bold;
             }
-
-
 
             & .icon-twrap {
                 margin-left: 12px;
@@ -450,7 +450,13 @@
             let result = dom_data.value;
             // //执行规则
             rule.forEach(item => {
-                result = rule_fun(result, item);
+                try {
+                    result = rule_fun(result, item);
+                } catch (error) {
+                    msgbox(`规则错误：\n${item.join("\t")}`);
+                    result = "";
+                    return false;
+                }
             });
             dom_result.value = result;
             auto_height(dom_result);
