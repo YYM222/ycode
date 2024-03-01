@@ -12,7 +12,8 @@
 
 <body>
     <h1>
-        <center>正则表式 - 数据处理</center>
+        <div class="h1_text">正则表式 - 数据处理</div>
+        <div class="h1_clip">正则表式 - 数据处理</div>
     </h1>
     <textarea name="data" id="data" style="width: 100%;" rows="10" placeholder="双击保存处理数据，右右键清除数据。"
         ondrop="Drop_file(event)"></textarea>
@@ -53,8 +54,12 @@
 
     <style>
         body {
-            background-color: #ffb6b6;
+            background-color: #cfa795;
             min-width: 1300px;
+            background-image: url(https://yym222.github.io/ycode/Img/mask-龙black.png);
+            background-size: auto 1550px;
+            background-repeat: no-repeat;
+            background-position: 50% -10px;
         }
 
         * {
@@ -66,8 +71,26 @@
             }
         }
 
+        h1>.h1_text {
+            color: #00f9c8;
+            text-align: center;
+        }
+
+        h1>.h1_clip {
+            position: absolute;
+            top: 8px;
+            left: calc(50% - 144px);
+            text-align: center;
+            background-image: url(https://yym222.github.io/ycode/Img/mask-龙white.png);
+            background-size: auto 1550px;
+            background-repeat: no-repeat;
+            background-position: 50% -18px;
+            color: transparent;
+            background-clip: text;
+        }
+
         textarea {
-            background-color: #fffaf2;
+            background-color: hsla(37, 100%, 97%, 0.904);
             white-space: nowrap;
         }
 
