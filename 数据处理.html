@@ -2,18 +2,12 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-
-
-
     <title>数据处理</title>
-
 </head>
 
 <body>
     <h1>
-        <div class="h1_text">正则表达式 - 数据处理</div>
-        <div class="h1_clip">正则表达式 - 数据处理</div>
+        正则表达式 - 数据处理
     </h1>
     <textarea name="data" id="data" style="width: 100%;" rows="10" placeholder="双击保存处理数据，右右键清除数据。"
         ondrop="Drop_file(event)"></textarea>
@@ -73,42 +67,9 @@
             }
         }
 
-
-        @property --width_h1 {
-            syntax: '<length>';
-            initial-value: -300px;
-            inherits: true;
-        }
-
-        @keyframes rotate {
-            to {
-                --width_h1: 300px;
-            }
-        }
-
         h1 {
-            animation: rotate 3s linear infinite alternate;
-            position: relative;
-            overflow: hidden;
-
-            .h1_text {
-                width: calc(100% + var(--width_h1));
-                color: #00f9c8;
-                text-align: center;
-            }
-
-            .h1_clip {
-                width: calc(100% + var(--width_h1));
-                position: absolute;
-                top: 0px;
-                text-align: center;
-                background-image: var(--white_dragon);
-                background-size: 1300px 1550px;
-                background-repeat: no-repeat;
-                background-position: max(calc(50% - var(--width_h1)/2), 0px) -8px;
-                color: transparent;
-                background-clip: text;
-            }
+            color: #FFEB3B;
+            text-align: center;
         }
 
 
@@ -658,38 +619,7 @@
         }
     </script>
 
-    <script>
-    let back_url = {
-        white_dragon: "https://yym222.github.io/ycode/Img/mask-龙white.png",
-        black_dragon: "https://yym222.github.io/ycode/Img/mask-龙black.png",
-    }
 
-    document.body.onload = () => {
-        let fetch_list = [];
-        for (let key in back_url) {
-            let pm = fetch(back_url[key]).then(response => response.blob()).then(blob => {
-                const reader = new FileReader();
-                reader.readAsDataURL(blob);
-                reader.onload = function () { back_url[key] = reader.result; };
-            });
-            fetch_list.push(pm);
-        }
-
-        Promise.all(fetch_list).then(() => {
-            setTimeout(() => {
-                let style_text = "";
-                for (let key in back_url) {
-                    style_text += `--${key}: url(${back_url[key]});\n`
-                };
-                var a = document.createElement("style");
-                a.innerHTML = `body{${style_text}}`
-                document.body.appendChild(a)
-                console.log(back_url);
-            }, 10)
-        })
-
-    }
-    </script>
 </body>
 
 </html>
