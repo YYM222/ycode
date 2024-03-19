@@ -1,12 +1,13 @@
 /* var script=document.createElement("script");
-script.src="https://114.132.73.183:444/yymbox/yymbox.js";
+script.src="https://yym222.github.io/ycode/yymbox/yymbox.js";
 script.charset="UTF8";
 document.head.appendChild(script); */
 
 let yymbox = {
     // yymbox_url: 'https://frp-oak.top:23347',
     // yymbox_url: 'http://localhost:666',
-    yymbox_url: "http://127.0.0.1:5500",
+    //yymbox_url: "http://127.0.0.1:5500",
+    //yymbox_url: "https://yym222.github.io/ycode",
     // yymbox_url: "..",
     server_url:'https://frp-oak.top:23347',
     my_append: function (el, type = "div", data = {}, position = 'end') {
