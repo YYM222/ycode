@@ -260,7 +260,7 @@ yymbox["data"] = [
         { name: "视频速度", children: [{ name: "0.5" }, { name: "1.25" }, { name: "1.5" }, { name: "1.75" }, { name: "2.0" }] }, { name: "" }, { name: "" },]
     },
     {
-        name: "网页效果", active: true, children: [
+        name: "网页效果", children: [
             { name: "背景-樱花飘落" },
             { name: "" },
             { name: "" },
