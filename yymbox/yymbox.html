@@ -1,0 +1,121 @@
+<head>
+    <meta charset="utf-8">
+</head>
+<div class="aaa">
+    <div class="bbb abc ede">bbb</div>
+    <div class="ccc">bbb</div>
+    <div>
+        123456
+    </div>
+    <a href="./aa">aaaaaa</a>
+    <a href="./aa" target="_blank">aaaaaa</a>
+    <button onclick="()=>console.log(1)">按钮</button>
+
+    <div id="a123">
+        <div class="b1">Lorem ipsum dolor sit.</div>
+        <div class="b23">Modi quae excepturi neque?</div>
+        <div class="b3">Ad, reiciendis omnis? Officiis.</div>
+        <div class="b13">Accusamus eius temporibus doloremque?</div>
+    </div>
+</div>
+
+<div id="img">
+    <!-- <img src="https://source.unsplash.com/random/108*192?1" alt=""> -->
+    <!-- <img src="https://source.unsplash.com/random/192*108?1" alt=""> -->
+</div>
+
+<div id="count">
+    <div>
+        <button onclick="sub(event)">-</button>
+        <div>0</div>
+        <button onclick="add(event)">+</button>
+    </div>
+
+    <div>
+        <button onclick="sub(event)">-</button>
+        <div>0</div>
+        <button onclick="add(event)">+</button>
+    </div>
+
+    <div>
+        <button onclick="sub(event)">-</button>
+        <div>0</div>
+        <button onclick="add(event)">+</button>
+    </div>
+
+    <div>
+        <button onclick="sub(event)">-</button>
+        <div>0</div>
+        <button onclick="add(event)">+</button>
+    </div>
+</div>
+
+<style>
+    #img>img {
+        width: 100px;
+    }
+
+    #a123 {
+        position: relative;
+    }
+
+    #count {
+        &>div {
+            display: flex;
+
+            &>div,
+            &>button {
+                width: 40px;
+                text-align: center;
+                margin-bottom: 10px;
+                height: 30px;
+                line-height: 30px;
+
+            }
+        }
+    }
+</style>
+<script src="./yymbox.js"></script>
+
+<script>
+    let button = document.querySelector("button");
+    let bbb = document.querySelector(".bbb");
+
+    function sub(e) {
+        let dom = e.target.parentNode.querySelector("div");
+        dom.innerHTML = Number(dom.innerHTML) - 1
+    }
+
+    function add(e) {
+        let dom = e.target.parentNode.querySelector("div");
+        dom.innerHTML = Number(dom.innerHTML) + 1
+    }
+
+
+    let now = (new Date()).getTime();
+    let arr = [
+        { node: "node1", time: 1000 },
+        { node: "node2", time: 2000 },
+        { node: "node3", time: 3000 },
+        { node: "node3", time: 4000 },
+    ];
+
+    function order_click(arr) {
+        let i = 0;
+        function ground() {
+            if (!arr[i]) { console.log((new Date()).getTime() - now, "执行完毕。"); return false };
+
+            return new Promise(r => {
+                setTimeout(() => {
+                    console.log((new Date()).getTime() - now, arr[i].node);
+                    i++;
+                    r(ground());
+                }, arr[i].time)
+            })
+        }
+
+        ground();
+    }
+
+    // order_click(arr)
+</script>
