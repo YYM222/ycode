@@ -118,6 +118,8 @@
     width: 100%;
     position: relative;
     overflow: hidden;
+        height: 26px;
+
 
     &:has(>button:hover) {
         overflow: visible;
