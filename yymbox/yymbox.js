@@ -124,17 +124,21 @@ let yymbox = {
             dom_msgbox["id"] = "msgbox";
             document.body.appendChild(dom_msgbox);
         }
+
+        let msgbox_div = document.createElement("div");
+
         let msgbox_item = document.createElement("textarea");
         msgbox_item.innerHTML = text;
-        msgbox_item.style.backgroundColor = color;
-        msgbox_item.style.width = w;
-        dom_msgbox.appendChild(msgbox_item);
+        msgbox_div.style.backgroundColor = color;
+        msgbox_div.style.width = w;
+        msgbox_div.appendChild(msgbox_item);
+        dom_msgbox.appendChild(msgbox_div);
 
-        let dom_timeout = setTimeout(() => msgbox_item.remove(), timeout);
+        let dom_timeout = setTimeout(() => msgbox_div.remove(), timeout);
         msgbox_item.addEventListener("mouseover", () => clearTimeout(dom_timeout));
         msgbox_item.addEventListener("focus", () => clearTimeout(dom_timeout));
-        msgbox_item.addEventListener("mouseout", () => { if (msgbox_item != document.activeElement) { dom_timeout = setTimeout(() => msgbox_item.remove(), timeout) } });
-        msgbox_item.addEventListener("blur", () => { dom_timeout = setTimeout(() => msgbox_item.remove(), timeout) });
+        msgbox_item.addEventListener("mouseout", () => { if (msgbox_item != document.activeElement) { dom_timeout = setTimeout(() => msgbox_div.remove(), timeout) } });
+        msgbox_item.addEventListener("blur", () => { dom_timeout = setTimeout(() => msgbox_div.remove(), timeout) });
 
         //结果输入框的高度调节
         function auto_height(el, h = "50px") { el.style.height = h; el.style.height = el.scrollHeight + 20 + 'px' };
@@ -150,24 +154,32 @@ let yymbox = {
                                         position: absolute;
                                         top: 20px;
                                         right: 10px;
+                                        width:250px;
                                         
-                                        &>textarea {
-                                            width: 100%;
-                                            display: block;
-                                            margin-right:auto;
-                                            min-height: 50px;
-                                            margin-bottom: 5px;
+                                        &>div{
                                             border-radius: 10px;
-                                            line-height: 25px;
-                                            padding: 2px;
-                                            font-weight: bolder;
-                                            outline: none;
-                                            border: none;
-                                            overflow: hidden;
-                                        }
+                                            margin-right:auto;
 
-                                        &>textarea:hover {
-                                            filter: brightness(1.2);
+                                            &>textarea {
+                                                width: 100%;
+                                                display: block;
+                                                min-height: 50px;
+                                                margin-bottom: 5px;
+                                                border-radius: 10px;
+                                                line-height: 25px;
+                                                padding: 2px;
+                                                font-weight: bolder;
+                                                outline: none;
+                                                border: none;
+                                                overflow: hidden;
+                                                mix-blend-mode: difference;
+                                                background-color: transparent;
+                                                color:white;
+                                            }
+    
+                                            &>textarea:hover {
+                                                filter: brightness(1.2);
+                                            }
                                         }
                                     }`;
             document.body.appendChild(msgbox_style);

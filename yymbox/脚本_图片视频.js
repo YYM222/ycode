@@ -78,7 +78,7 @@
     };
 
     //使用说明。
-    yymbox.data[index].children[0].children[0].func = (e, item) => { yymbox.msgbox("点击图片：在新的标签页打开。\n右键图片：下载图片。\n\n【重设名字】：重新设置保存图片的文件名字。\n\n【自定义序号】：设置起始的序号。") };
+    yymbox.data[index].children[0].children[0].func = (e, item) => { yymbox.msgbox("点击图片：在新的标签页打开。\n右键图片：下载图片。\n\n【重设名字】：重新设置保存图片的文件名字。\n\n【自定义序号】：设置起始的序号。",4000,"350px","black") };
 
     //重设名字。
     yymbox.data[index].children[0].children[1].func = (e, item) => { img_name = prompt("请输入图片保存的名字。"); img_name_index = 1; };
@@ -135,6 +135,7 @@
     //功能三。
     yymbox.data[index].children[2].func = (e, item) => {
         let state = yymbox.is_stick(e);
+        yymbox.msgbox("12348978",30000)
     }
     // ==================================================================================================
     // ==================================================================================================
