@@ -33,11 +33,17 @@
         }
     };
     // ==================================================================================================
-    //                                               。。。。
+    //                                               粒子运动
     // ==================================================================================================
 
     yymbox.data[index].children[1].func = (e, item) => {
         let state = yymbox.is_stick(e);
+        if (state) {
+            yymbox.my_append(YYM, "script", { src: `${yymbox.yymbox_url}/yymbox/背景-粒子运动.js` }).then(el => Special_dom_list["粒子运动"] = el);
+        } else {
+            Special_dom_list["粒子运动"].remove();
+            document.querySelector("#particles-js").remove();
+        }
     };
 
     // ==================================================================================================
