@@ -1,3 +1,12 @@
+#YYM>#yymbox * {
+    font-size: 14px;
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    zoom: 1;
+    line-height: 1;
+}
+
 #yymbox {
     --LR: 1;
     --LRt: "null";
@@ -285,7 +294,7 @@
         line-height: 20px;
         position: absolute;
         opacity: 0.5;
-        z-index:  999999990 !important;
+        z-index: 999999990 !important;
     }
 
     &>.autoclick_item_order {
