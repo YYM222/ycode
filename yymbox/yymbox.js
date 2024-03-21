@@ -130,7 +130,7 @@ let yymbox = {
         let msgbox_item = document.createElement("textarea");
         msgbox_item.innerHTML = text;
         msgbox_div.style.backgroundColor = color;
-        msgbox_div.style.width = w;
+        msgbox_div.style.minWidth = w;
         msgbox_div.appendChild(msgbox_item);
         dom_msgbox.appendChild(msgbox_div);
 
@@ -159,6 +159,7 @@ let yymbox = {
                                         &>div{
                                             border-radius: 10px;
                                             margin-right:auto;
+                                            display: inline-block;
 
                                             &>textarea {
                                                 width: 100%;
@@ -175,6 +176,7 @@ let yymbox = {
                                                 mix-blend-mode: difference;
                                                 background-color: transparent;
                                                 color:white;
+                                                resize: both;
                                             }
     
                                             &>textarea:hover {
