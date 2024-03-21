@@ -1,4 +1,4 @@
-#YYM>#yymbox * {
+#yymbox * {
     font-size: 14px;
     margin: 0px;
     padding: 0px;
@@ -86,8 +86,6 @@
 
 #yymbox>#yymbox_list>.host {
     text-align: center;
-    height: 25px;
-    line-height: 25px;
     background-color: #2e2e2e;
     margin-bottom: 1px;
     background-image: linear-gradient(45deg, #003333 0%, #333366 50%, #336600 100%);
@@ -96,9 +94,6 @@
     overflow: hidden;
 
     &:hover {
-        height: 30px;
-        line-height: 30px;
-
         &>.host1 {
             display: none;
         }
@@ -106,7 +101,14 @@
         &>.host2 {
             background-color: #ff5777;
             display: block;
+            height: 30px;
+            line-height: 30px;
         }
+    }
+
+    &>.host1 {
+        height: 25px;
+        line-height: 25px;
     }
 
     &>.host2 {
@@ -321,6 +323,6 @@
                         特殊效果
 ==========================================================================
 */
-#canvas_sakura{
-z-index: 999999999;
+#canvas_sakura {
+    z-index: 999999999;
 }
