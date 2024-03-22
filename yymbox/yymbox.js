@@ -229,6 +229,7 @@ switch (location.hostname) {
         break;
 
     default:
+         yymbox.yymbox_url = "https://yym222.github.io/ycode"
         break;
 }
 
