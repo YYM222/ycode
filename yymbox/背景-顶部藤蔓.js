@@ -1,6 +1,11 @@
 //id = vines_tree
+//settime = window.vines_tree_1
+//settime = window.vines_tree_2
 
 function vines_tree() {
+    let dom_vines_tree_ = document.querySelector("vines_tree");
+    if (dom_vines_tree_) { dom_vines_tree_.remove() };
+
     let dom_vines_tree = document.createElement("div");
     dom_vines_tree.id = "vines_tree";
     dom_vines_tree.innerHTML = `<style>
@@ -75,12 +80,12 @@ function vines_tree() {
     }
     let flow_list = buildWorld();
 
-    setTimeout(() => {
+    window.vines_tree_1 = setTimeout(() => {
         if (!dom_vines_tree) { return false };
         for (let flow of flow_list) {
             flow.style.animationIterationCount = 2;
         }
-        setTimeout(() => { dom_vines_tree.remove(); vines_tree() }, 20000);
+        window.vines_tree_2 = setTimeout(() => { dom_vines_tree.remove(); vines_tree() }, 20000);
     }, 120000)
 
 }

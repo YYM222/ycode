@@ -121,6 +121,8 @@
     position: relative;
     overflow: hidden;
     height: 26px;
+    display: block;
+    border: none;
 
     &:has(>button:hover) {
         overflow: visible;

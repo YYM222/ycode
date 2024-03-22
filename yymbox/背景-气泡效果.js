@@ -1,3 +1,5 @@
+//window.wrapper_Bubble_time
+//
 (function () {
   let a = document.createElement("div");
   a.classList.add("wrapper_Bubble");
@@ -65,6 +67,6 @@ div .dot {
   create_bubble(); create_bubble(); create_bubble(); create_bubble(); create_bubble();
   create_bubble(); create_bubble(); create_bubble(); create_bubble(); create_bubble();
 
-  setInterval(create_bubble, 300);
+  window.wrapper_Bubble_time = setInterval(create_bubble, 300);
 
 })()

@@ -57,6 +57,7 @@
         } else {
             Special_dom_list["气泡效果"].remove();
             document.querySelector(".wrapper_Bubble").remove();
+            clearInterval(window.wrapper_Bubble_time);
         }
     };
 
@@ -71,6 +72,8 @@
         } else {
             Special_dom_list["顶部藤蔓"].remove();
             document.querySelector("#vines_tree").remove();
+            clearTimeout(window.vines_tree_1);
+            clearTimeout(window.vines_tree_2);
         }
     };
 
