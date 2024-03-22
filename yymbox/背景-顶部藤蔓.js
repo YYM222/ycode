@@ -16,7 +16,7 @@ function vines_tree() {
     width: 100vw;
     height: 100vh;
     pointer-events: none;
-    mix-blend-mode: multiply;
+    mix-blend-mode: exclusion;
 }
 .flower {
     filter: drop-shadow(4px 4px 2px rgba(0, 0, 0, .25));

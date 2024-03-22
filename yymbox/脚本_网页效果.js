@@ -76,7 +76,20 @@
             clearTimeout(window.vines_tree_2);
         }
     };
+    // ==================================================================================================
+    //                                           背景-新年烟花
+    // ==================================================================================================
 
+    yymbox.data[index].children[4].func = (e, item) => {
+        let state = yymbox.is_stick(e);
+        if (state) {
+            yymbox.my_append(YYM, "script", { src: `${yymbox.yymbox_url}/yymbox/背景-新年烟花.js` }).then(el => Special_dom_list["新年烟花"] = el);
+        } else {
+            Special_dom_list["新年烟花"].remove();
+            document.querySelector("#cas").remove();
+            clearTimeout(window.cas_time);
+        }
+    };
     // ==================================================================================================
 
     // ==================================================================================================

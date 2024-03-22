@@ -216,20 +216,20 @@ switch (location.hostname) {
         yymbox.yymbox_url = ".."
         break;
 
-    case "127.0.0.1:5500":
+    case "127.0.0.1":
         yymbox.yymbox_url = "http://127.0.0.1:5500"
         break;
-        
+
     case "yym222.github.io":
         yymbox.yymbox_url = "https://yym222.github.io/ycode"
         break;
 
-    case "frp-oak.top:23347":
+    case "frp-oak.top":
         yymbox.yymbox_url = "https://frp-oak.top:23347"
         break;
 
     default:
-         yymbox.yymbox_url = "https://yym222.github.io/ycode"
+        yymbox.yymbox_url = "https://yym222.github.io/ycode"
         break;
 }
 
@@ -303,6 +303,7 @@ yymbox["data"] = [
             { name: "背景-粒子运动" },
             { name: "背景-气泡效果" },
             { name: "背景-顶部藤蔓" },
+            { name: "背景-新年烟花" },
         ]
     },
     { name: "其 他" },
