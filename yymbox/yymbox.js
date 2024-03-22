@@ -6,8 +6,8 @@ javascript:fetch("https://yym222.github.io/ycode/yymbox/index.js").then(r => r.t
 let yymbox = {
     // yymbox_url: 'https://frp-oak.top:23347',
     // yymbox_url: 'http://localhost:666',
-    yymbox_url: 'https://yym222.github.io/ycode',
-    //yymbox_url: "http://127.0.0.1:5500",
+    //  yymbox_url: 'https://yym222.github.io/ycode',
+    yymbox_url: "http://127.0.0.1:5500",
     // yymbox_url: "..",
     server_url: 'https://frp-oak.top:23347',
     my_append: function (el, type = "div", data = {}, position = 'end') {
@@ -210,6 +210,29 @@ let yymbox = {
     },
 };
 
+
+switch (location.hostname) {
+    case "":
+        yymbox.yymbox_url = ".."
+        break;
+
+    case "127.0.0.1:5500":
+        yymbox.yymbox_url = "http://127.0.0.1:5500"
+        break;
+        
+    case "yym222.github.io":
+        yymbox.yymbox_url = "https://yym222.github.io/ycode"
+        break;
+
+    case "frp-oak.top:23347":
+        yymbox.yymbox_url = "https://frp-oak.top:23347"
+        break;
+
+    default:
+        break;
+}
+
+
 yymbox["click_list"] = [];
 yymbox["is_stick"] = el => {
     el = el.target || el;
@@ -277,8 +300,8 @@ yymbox["data"] = [
         name: "网页效果", children: [
             { name: "背景-樱花飘落" },
             { name: "背景-粒子运动" },
-            { name: "" },
-            { name: "" },
+            { name: "背景-气泡效果" },
+            { name: "背景-顶部藤蔓" },
         ]
     },
     { name: "其 他" },

@@ -47,6 +47,35 @@
     };
 
     // ==================================================================================================
+    //                                           背景 - 气泡效果
+    // ==================================================================================================
+
+    yymbox.data[index].children[2].func = (e, item) => {
+        let state = yymbox.is_stick(e);
+        if (state) {
+            yymbox.my_append(YYM, "script", { src: `${yymbox.yymbox_url}/yymbox/背景-气泡效果.js` }).then(el => Special_dom_list["气泡效果"] = el);
+        } else {
+            Special_dom_list["气泡效果"].remove();
+            document.querySelector(".wrapper_Bubble").remove();
+        }
+    };
+
+    // ==================================================================================================
+    //                                           背景-顶部藤蔓
+    // ==================================================================================================
+
+    yymbox.data[index].children[3].func = (e, item) => {
+        let state = yymbox.is_stick(e);
+        if (state) {
+            yymbox.my_append(YYM, "script", { src: `${yymbox.yymbox_url}/yymbox/背景-顶部藤蔓.js` }).then(el => Special_dom_list["顶部藤蔓"] = el);
+        } else {
+            Special_dom_list["顶部藤蔓"].remove();
+            document.querySelector("#vines_tree").remove();
+        }
+    };
+
+    // ==================================================================================================
+
     // ==================================================================================================
 
     //使用说明。
