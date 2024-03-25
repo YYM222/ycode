@@ -236,13 +236,14 @@
     border-radius: 10px;
 
     &:hover::after {
-        content: "关闭";
-        width: 30px;
+        content: "关 闭";
+        width: 24px;
         text-align: center;
         background-color: #66CC00;
-        padding: 3px;
+        padding: 6px;
+        font-size: 20px;
         border-radius: 3px;
-
+        height: 45px;
         position: absolute;
         top: 0px;
         right: -36px;

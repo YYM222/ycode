@@ -87,7 +87,20 @@
         } else {
             Special_dom_list["新年烟花"].remove();
             document.querySelector("#cas").remove();
-            clearTimeout(window.cas_time);
+            clearInterval(window.SpaceShuttle_time);
+        }
+    };
+    // ==================================================================================================
+    //                                           背景-太空穿梭
+    // ==================================================================================================
+
+    yymbox.data[index].children[5].func = (e, item) => {
+        let state = yymbox.is_stick(e);
+        if (state) {
+            yymbox.my_append(YYM, "script", { src: `${yymbox.yymbox_url}/yymbox/背景-太空穿梭.js` }).then(el => Special_dom_list["太空穿梭"] = el);
+        } else {
+            Special_dom_list["太空穿梭"].remove();
+            document.querySelector("#SpaceShuttle").remove();
         }
     };
     // ==================================================================================================

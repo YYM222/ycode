@@ -35,8 +35,7 @@
     //开启去广告功能。输入一个数组，将数组中的规则应用页面。
     function clear_advert(list) {
         try { document.querySelector("#clear_advert").remove() } catch { };
-        list = [...new Set(list)];
-        let rule_list = list.join(",");
+        let rule_list = [...new Set(list)].join(",");
         yymbox.my_append(dom_yymbox, "style", { id: "clear_advert", innerHTML: `${rule_list}{display:none !important;}` });
     };
 
@@ -185,6 +184,7 @@
     //设置右键事件，来获取规则。
     yymbox.data[index].children[2].func = (e, item) => {
         let state = yymbox.is_stick(e);
+        item.state = state;
         if (state) {
             //判断去除广告是否开启,如果没有就开启
             yymbox.data[index].children[1].state ? 1 : yymbox.data[index].children[1].node.click();
@@ -257,6 +257,14 @@
             localStorage.setItem("advent_rule", advent_rule);
 
             yymbox.msgbox(`保存失败，服务器未开启！\n已为您保存到本地。`);
+
+            //判断 添加规则 是否开启,如果没有就开启
+            yymbox.data[index].children[2].state ? yymbox.data[index].children[2].node.click() : 0;
+
+            //判断 查看规则 是否开启,如果没有就开启
+            yymbox.data[index].children[3].state ? yymbox.data[index].children[3].node.click() : 0;
+
+
         })
 
     }

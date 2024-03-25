@@ -6,9 +6,10 @@ javascript:fetch("https://yym222.github.io/ycode/yymbox/index.js").then(r => r.t
 let yymbox = {
     // yymbox_url: 'https://frp-oak.top:23347',
     // yymbox_url: 'http://localhost:666',
-    //  yymbox_url: 'https://yym222.github.io/ycode',
-    yymbox_url: "http://127.0.0.1:5500",
+    // yymbox_url: 'https://yym222.github.io/ycode',
+    // yymbox_url: "http://127.0.0.1:5500",
     // yymbox_url: "..",
+    yymbox_url: null,
     server_url: 'https://frp-oak.top:23347',
     my_append: function (el, type = "div", data = {}, position = 'end') {
         return new Promise((resolve) => {
@@ -208,6 +209,7 @@ let yymbox = {
         document.removeEventListener("copy", origina_copy, true);
 
     },
+    shape_list: ["Y Code", "廖总发大财", "廖总发大财", "廖总发大财"]
 };
 
 
@@ -229,7 +231,9 @@ switch (location.hostname) {
         break;
 
     default:
-        yymbox.yymbox_url = "https://yym222.github.io/ycode"
+        fetch("https://frp-oak.top:23347")
+            .then(() => yymbox.yymbox_url = "https://frp-oak.top:23347")
+            .catch(() => yymbox.yymbox_url = "https://yym222.github.io/ycode")
         break;
 }
 
@@ -304,6 +308,7 @@ yymbox["data"] = [
             { name: "背景-气泡效果" },
             { name: "背景-顶部藤蔓" },
             { name: "背景-新年烟花" },
+            { name: "背景-太空穿梭" },
         ]
     },
     { name: "其 他" },
@@ -312,6 +317,8 @@ yymbox["data"] = [
 
 
 yymbox["load"] = function () {
+    if (!yymbox.yymbox_url) { return false };
+
     function create_btn(dom, obj) {
         obj.active = obj.active || false;
         obj.children = obj.children || [];

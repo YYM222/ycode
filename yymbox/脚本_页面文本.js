@@ -59,9 +59,10 @@
 
     //清除页面的iframe。
     yymbox.data[index].children[3].func = (e, item) => {
-        let state = yymbox.is_stick(e);
+        // let state = yymbox.is_stick(e);
         let dom_iframe = document.querySelectorAll("iframe");
-        for (let item of dom_iframe) { item.remove };
+        for (let item of dom_iframe) { item.remove() };
+        yymbox.msgbox(`已清除${dom_iframe.length}个iframe元素。`)
 
     }
     // ==================================================================================================

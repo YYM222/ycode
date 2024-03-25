@@ -53,7 +53,8 @@
                 );
                 bigbooms.push(bigboom);
             } else {
-                let shape_list = ["新年快乐", "上岸成功", "万事如意", "心想事成","Y Code"];
+                let shape_list = ["新年快乐", "上岸成功", "万事如意", "心想事成"];
+                if(yymbox["shape_list"]){shape_list = yymbox["shape_list"]};
                 let dom_shape_list = document.createDocumentFragment("div");
                 for (let text of shape_list) {
                     let a = document.createElement("div");
