@@ -29,6 +29,7 @@
                 background: linear-gradient(135deg, #c7e9fbcc, #a6defacc, #80d4f9cc, #5bc9f8cc, #35bef7cc);
                 position: fixed;
                 height: 100vh;
+                width:100vw;
                 overflow-y: auto;
                 z-index: 999999;
             }

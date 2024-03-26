@@ -103,6 +103,60 @@
             document.querySelector("#SpaceShuttle").remove();
         }
     };
+
+    // ==================================================================================================
+    //                                           背景-3D光圈
+    // ==================================================================================================
+
+    yymbox.data[index].children[6].func = (e, item) => {
+        let state = yymbox.is_stick(e);
+        if (state) {
+            yymbox.my_append(YYM, "script", { src: `${yymbox.yymbox_url}/yymbox/背景-3D光圈.js` }).then(el => Special_dom_list["3D光圈"] = el);
+        } else {
+            Special_dom_list["3D光圈"].remove();
+            document.querySelector("#lightcircle").remove();
+        }
+    };
+
+    // ==================================================================================================
+    //                                           背景-3D粒子
+    // ==================================================================================================
+
+    yymbox.data[index].children[7].func = (e, item) => {
+        let state = yymbox.is_stick(e);
+        if (state) {
+            yymbox.my_append(YYM, "script", { src: `${yymbox.yymbox_url}/yymbox/背景-3D粒子.js` }).then(el => Special_dom_list["3D粒子"] = el);
+        } else {
+            Special_dom_list["3D粒子"].remove();
+            document.querySelector("#particle").remove();
+        }
+    };
+    // ==================================================================================================
+    //                                           背景-炫酷粒子
+    // ==================================================================================================
+
+    yymbox.data[index].children[8].func = (e, item) => {
+        let state = yymbox.is_stick(e);
+        if (state) {
+            yymbox.my_append(YYM, "script", { src: `${yymbox.yymbox_url}/yymbox/背景-炫酷粒子.js` }).then(el => Special_dom_list["炫酷粒子"] = el);
+        } else {
+            Special_dom_list["炫酷粒子"].remove();
+            document.querySelector("#particle").remove();
+        }
+    };
+    // ==================================================================================================
+    //                                           背景-星空视差
+    // ==================================================================================================
+
+    yymbox.data[index].children[9].func = (e, item) => {
+        let state = yymbox.is_stick(e);
+        if (state) {
+            yymbox.my_append(YYM, "script", { src: `${yymbox.yymbox_url}/yymbox/背景-星空视差.js` }).then(el => Special_dom_list["星空视差"] = el);
+        } else {
+            Special_dom_list["星空视差"].remove();
+            document.querySelector("#particle").remove();
+        }
+    };
     // ==================================================================================================
 
     // ==================================================================================================
