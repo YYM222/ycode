@@ -5,6 +5,7 @@
     c.innerHTML = `
     <style>
         body {
+            background-color: transparent;
             color: white;
         }
 

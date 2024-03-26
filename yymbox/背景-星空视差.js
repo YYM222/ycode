@@ -5,6 +5,7 @@
     canvas.innerHTML = `
     <style>
         body {
+            background-color: transparent;
             color: #ffeb3b;
         }
 

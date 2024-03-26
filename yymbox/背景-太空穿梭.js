@@ -4,6 +4,7 @@
         a.id = "SpaceShuttle";
         a.innerHTML = `<style>
                             body {
+                                background-color: transparent;
                                 color: rgb(255, 255, 255);
                             }
 

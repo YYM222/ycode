@@ -3,7 +3,7 @@
 
 (function () {
     let dom_cas = document.createElement("div");
-    dom_cas.innerHTML = `<canvas id="cas"></canvas><style> body{ color: white; } </style>`;
+    dom_cas.innerHTML = `<canvas id="cas"></canvas><style> body{ color: white;background-color: transparent; } </style>`;
     document.body.appendChild(dom_cas);
 
     // let dom_cas = document.createElement("canvas");
@@ -54,7 +54,7 @@
                 bigbooms.push(bigboom);
             } else {
                 let shape_list = ["新年快乐", "上岸成功", "万事如意", "心想事成"];
-                if(yymbox["shape_list"]){shape_list = yymbox["shape_list"]};
+                if (yymbox["shape_list"]) { shape_list = yymbox["shape_list"] };
                 let dom_shape_list = document.createDocumentFragment("div");
                 for (let text of shape_list) {
                     let a = document.createElement("div");
@@ -148,7 +148,7 @@
         window.oRequestAnimationFrame ||
         window.msRequestAnimationFrame ||
         function (callback) {
-           window.cas_time = window.setTimeout(callback, 1000 / 60);
+            window.cas_time = window.setTimeout(callback, 1000 / 60);
         };
 
     canvas.onclick = function () {

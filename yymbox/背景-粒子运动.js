@@ -1,7 +1,7 @@
 Promise.resolve().then(() => {
   let a = document.createElement("div");
   a.id = "particles-js";
-  a.innerHTML = `<canvas class="particles-js-canvas-el" width="1897" height="932" style="width: 100%; height: 100%" ></canvas><style> #particles-js{ position: fixed; width: 100vw; height: 100vh; top: 0px; left: 0px; pointer-events: none; } </style>`;
+  a.innerHTML = `<canvas class="particles-js-canvas-el" width="1897" height="932" style="width: 100%; height: 100%" ></canvas><style> #particles-js{ position: fixed; width: 100vw; height: 100vh; top: 0px; left: 0px; pointer-events: none;background-color: transparent; } </style>`;
   document.body.appendChild(a);
 }).then(() =>{ LZDH() })
 

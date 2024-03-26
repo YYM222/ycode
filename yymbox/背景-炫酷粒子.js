@@ -6,7 +6,8 @@
         canvas.innerHTML = `
         <style>
             body {
-                color: #ffeb3b;
+            background-color: transparent;
+            color: #ffeb3b;
             }
 
             #coolparticle {

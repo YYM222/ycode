@@ -5,6 +5,7 @@
     canvas.innerHTML = `
                         <style>
                             body{
+                                background-color: transparent;
                                 color: white;
                             }
                             #lightcircle{
