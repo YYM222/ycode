@@ -2,15 +2,19 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+
+
     <title>数据处理</title>
+
 </head>
 
 <body>
     <h1>
-        正则表达式 - 数据处理
+        <center>正则表式 - 数据处理</center>
     </h1>
-    <textarea name="data" id="data" style="width: 100%;" rows="10" placeholder="双击保存处理数据，右右键清除数据。"
-        ondrop="Drop_file(event)"></textarea>
+    <textarea name="data" id="data" style="width: 100%;" rows="10" placeholder="双击获取处理数据"></textarea>
     <div id="rule">
         <div id="rule_txt">
             <textarea id="rule_txt_1"></textarea>
@@ -18,64 +22,46 @@
 
         <div id="control">
             <div>
-                <button onclick="cite_rule()" title="引用左输入框的规则" style="background-color: #ff94ff;">引 用</button>
-                <button onclick="save_rule()" title="保存当前规则至左输入框" style="background-color: #ff94ff;">保 存</button>
-                <button onclick="clear_rule(2)" style="background-color: #ff7349;">清除规则</button>
-                <button onclick="rule_help_fun()" style="background-color: #dadaed;">说 明</button>
+                <button onclick="cite_rule()" title="引用左输入框的规则">引 用</button>
+                <button onclick="save_rule()" title="保存当前规则至左输入框">保 存</button>
+                <button onclick="clear_rule(2)">清除规则</button>
+                <button onclick="rule_help_fun()">说 明</button>
             </div>
+
             <div>
                 <button onclick="add_rule(1)" title="规则1：将匹配的元素替换为指定文本。
-            规则后面写【 $i】则忽略大小写" style="background-color: #62cdff;">1 替换</button>
-                <button onclick="add_rule(2)" title="规则2：获取符合匹配的结果" style="background-color: #62cdff;">2 筛选</button>
-                <button onclick="add_rule(3)" style="background-color: #62cdff;">3 函数</button>
-                <button onclick="rule_big_low()" title="规则5：返回大小写模式" style="background-color: #62cdff;">大小转换</button>
+            规则后面写【 $i】则忽略大小写">1 替换</button>
+                <button onclick="add_rule(2)" title="规则2：获取符合匹配的结果">2 筛选</button>
+                <button onclick="add_rule(3)">3 函数</button>
+                <button onclick="rule_big_low()" title="规则5：返回大小写模式">大小写转换</button>
             </div>
         </div>
         <div>
-            <button onclick="do_rule()" title="使用当前规则" class="do_rule" style="background-color: #03fcb2;">使用规则</button>
+            <button onclick="do_rule()" title="使用当前规则" class="do_rule">使用规则</button>
         </div>
         <div id="rule_save_list"></div>
     </div>
     <div id="rule_help" style="display: none;">
-        <p>规则1：将匹配的元素替换为指定文本。规则后面写【 $i】则忽略大小写。【&lt;i&gt; 为序号】</p>
+        <p>规则1：将匹配的元素替换为指定文本。规则后面写【 $i】则忽略大小写</p>
         <p>规则2：获取符合筛选的结果</p>
-        <p>规则3：写入函数，可直接运行。data为文本，file_name为文件名。</p>
-        <p>其他：【中文匹配：[\u4e00-\u9fa5]。】
+        <p>规则3：函数</p>
+        <p>其他：【中文匹配：[\u4e00-\u9fa5]。】【&lt;repeat/&gt;在rule3中替换为匹配项。】【&lt;index/&gt;在rule3中替换为序号。】
         </p>
     </div>
     <div id="rule_list"></div>
-    <textarea name="result" id="result"></textarea>
-
+    <textarea name="result" id="result" style="width: 100%;height: 200px;"></textarea>
     <style>
         body {
-            --white_dragon: "";
-            --black_dragon: "";
-            background-color: #cfa795;
+            background-color: #ffb6b6;
             min-width: 1300px;
-            background-image: var(--black_dragon);
-            background-size: 1300px 1550px;
-            background-repeat: no-repeat;
-            background-position: max(50%, 0px) 0px;
         }
 
         * {
             color: #484e5d;
-
-            button:hover {
-                filter: brightness(1.2);
-                transform: scale(1.1);
-            }
         }
-
-        h1 {
-            color: #FFEB3B;
-            text-align: center;
-        }
-
 
         textarea {
-            background-color: hsla(37, 100%, 97%, 0.904);
-            white-space: nowrap;
+            background-color: #fffaf2;
         }
 
         #rule {
@@ -112,11 +98,9 @@
                     font-weight: bolder;
                     border: none;
                     min-width: 75px;
-                    mask-image: url("https://yym222.github.io/ycode/Img/mask.png");
-                    mask-size: 100%;
 
                     &:active {
-                        background-color: #ff4b72 !important;
+                        background-color: #fe7235;
                     }
                 }
 
@@ -134,7 +118,7 @@
                 border: none;
 
                 &:active {
-                    background-color: #ff4b72 !important;
+                    background-color: #fe7235;
                 }
             }
 
@@ -143,9 +127,13 @@
                 margin: 5px 10px;
                 border: none;
                 border-radius: 6px;
-                background-color: #ffffa0;
             }
         }
+
+
+
+
+
 
         #rule_list {
             margin: 20px 0px;
@@ -157,7 +145,7 @@
 
                 & input,
                 textarea {
-                    width: 436px;
+                    width: 418px;
                     padding: 3px;
                     outline: 0;
                     border: 1px solid #a0b3d6;
@@ -171,11 +159,11 @@
             }
 
             .rule_mode[name="2"] input {
-                width: 972px;
+                width: 936px;
             }
 
             .rule_mode[name="3"] textarea {
-                width: 972px;
+                width: 936px;
                 height: 120px;
                 line-height: 1.2;
             }
@@ -183,35 +171,35 @@
         }
 
 
-        .rule_mode {
-            &>.rule_mode_2 {
-                width: 100px;
-                text-align: center;
-                line-height: 30px;
-                font-weight: bold;
-            }
 
-            & .icon-twrap {
-                margin-left: 12px;
-                font-size: 26px;
-                height: max-content;
-                margin: auto 12px;
-                margin-right: 0px;
-            }
 
-            & .icon-twrap:active {
-                background-color: rgb(107, 187, 111);
-            }
 
-            & .icon-twrap svg {
-                pointer-events: none;
-            }
+        .rule_mode>.rule_mode_2 {
+            width: 100px;
+            text-align: center;
         }
+
+
+
+        .rule_mode .icon-twrap {
+            margin-left: 12px;
+            font-size: 26px;
+            height: max-content;
+            margin: auto 12px;
+            margin-right: 0px;
+        }
+
+        .rule_mode .icon-twrap:active {
+            background-color: rgb(107, 187, 111);
+        }
+
+        .rule_mode .icon-twrap svg {
+            pointer-events: none;
+        }
+
 
         #result {
             white-space: pre;
-            width: 100%;
-            height: 400px;
         }
     </style>
 
@@ -222,55 +210,24 @@
         let dom_rule_txt_1 = document.querySelector("#rule_txt_1");
         let dom_rule_list = document.querySelector("#rule_list");
 
-        //拖拽文件获取数据
-        let file_name = "";
-        function Drop_file(e) {
-            e.preventDefault();
-            var files = e.dataTransfer.files;
-            for (let item of files) {
-                item.text().then(res => {
-                    file_name = item.name;
-                    dom_data.value = "";
-                    dom_data.value = res;
-                    do_rule();
-                })
-            }
-
-        }
-
-        //双击保存数据到本地,右键清除数据。
-        dom_data.addEventListener("dblclick", () => {
-            if (dom_data.value == "") {
-                dom_data.value = localStorage.getItem("dom_data_save");
-            } else {
-                msgbox("已保存数据！");
-                localStorage.setItem("dom_data_save", dom_data.value);
-            }
-        })
-        dom_data.addEventListener("contextmenu", (e) => {
-            e.preventDefault()
-            dom_data.value = "";
-        })
-
         //去除空数组元素
         function clear_arr(arr) { arr.filter(item => item != "") };
 
         //结果输入框的高度调节
-        function auto_height(el, h = "400px") {
-            el.style.height = h;
-            el.style.height = el.scrollHeight + 20 + 'px';
-        };
-        dom_result.addEventListener("input", () => auto_height(dom_result));
-
+        dom_result.addEventListener("input", () => { dom_result.style.height = dom_result.scrollHeight + 20 + 'px' });
 
         //引用规则
         function cite_rule(rule) {
             if (dom_rule_txt_1.value == "") { return false };
 
-            rule_txt_1 = dom_rule_txt_1.value;
+            let rule_txt_1 = dom_rule_txt_1.value;
             clear_rule();
 
-            rule_txt_1.split("\n").map(res => { return res.split("　　　　") }).forEach(item => { add_rule_mode(item[0], item.slice(1,)); });
+            rule_txt_1.split("\n").map(res => { return res.split("　　　　") }).forEach(item => {
+                item[1] = item[1] || "";
+                item[2] = item[2] || "";
+                add_rule_mode(item[0], [item[1], item[2]]);
+            });
         };
 
         //清除规则
@@ -295,12 +252,10 @@
             dom_rule_save_list.innerHTML = "";
             rule_save_list = JSON.parse(localStorage.getItem("rule"));
             if (rule_save_list) {
-                for (let key in rule_save_list) { append_dom(dom_rule_save_list, "button", { innerHTML: key }) };
+                for (let key in rule_save_list) { rule_save_list[key] != "" ? append_dom(dom_rule_save_list, "button", { innerHTML: key }) : false; };
                 dom_rule_save_list.onclick = (e) => {
-                    if (e.target.tagName == 'BUTTON') {
-                        dom_rule_txt_1.value = rule_save_list[e.target.innerHTML];
-                        cite_rule();
-                    }
+                    dom_rule_txt_1.value = rule_save_list[e.target.innerHTML];
+                    cite_rule();
                     e.preventDefault();
                 };
 
@@ -308,12 +263,15 @@
                     if (e.target.nodeName != "BUTTON") { return false };
                     let is_del = confirm(`是否要删除【${e.target.innerHTML}】规则？`);
                     if (is_del) {
-                        delete rule_save_list[e.target.innerHTML];
+                        rule_save_list[e.target.innerHTML] = "";
                         localStorage.setItem("rule", JSON.stringify(rule_save_list));
+                        dom_rule_save_list.innerHTML = "";
                         load_rule();
                     }
                     e.preventDefault();
                 };
+            } else {
+                rule_save_list = {};
             }
         }
         load_rule();
@@ -328,7 +286,6 @@
 
             dom_rule_txt_1.value = rule;
             rule_save_list[rule_name] = rule;
-            for (let key in rule_save_list) { rule_save_list[key] == "" ? delete rule_save_list[key] : true };
             localStorage.setItem('rule', JSON.stringify(rule_save_list));
             load_rule();
         }
@@ -363,7 +320,8 @@
         //将规则数组转为html文本，添加到dom树上。
         function add_rule_mode(index, rule_detail = ["", ""]) {
             let txt = "";
-            let arr = [index, ...rule_detail]
+            let arr = [index, ...rule_detail];
+
             del_svg = ` <div class="icon-twrap" onclick='del_rule(event)'>
                             <svg class="icon" style="width: 1em;height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
                                 viewBox="0 0 1024 1024" version="1.1" p-id="2775">
@@ -404,14 +362,14 @@
                     txt = `
                     <div class="rule_mode" name="${arr[0]}">
                         <div> 
-                            <textarea  placeholder="【data为当前文本数据】【file_name为文件名字】">${arr[1].replace(/@@@/g, "\n")}</textarea>
+                            <textarea  value="${arr[1].replace(/@@@/g, "\n")}"></textarea>
                         </div>
                         ${del_svg}
                     </div>
                     `
                     break;
                 default:
-                    msgbox("规则错误：</br>" + arr);
+                    console.log(arr);
             }
 
             var a = document.createElement("div");
@@ -445,7 +403,7 @@
 
                 c[0] = Number(item.getAttribute("name"));
                 c[1] = dom_rule_mode_input[0].value.replace(/\n/g, "@@@");
-                c[2] = dom_rule_mode_input[1] ? Special_chars(dom_rule_mode_input[1].value) : null;
+                c[2] = dom_rule_mode_input[1] ? dom_rule_mode_input[1].value : null;
 
                 rule.push(c);
             });
@@ -455,22 +413,16 @@
 
         function do_rule() {
             let rule = get_rule_mode_list();
+            rule.forEach(item => item[2] ? item[2] = Special_chars(item[2]) : 0);
 
             // //获取数据原文
             let result = dom_data.value;
             // //执行规则
             rule.forEach(item => {
-                try {
-                    result = rule_fun(result, item);
-                } catch (error) {
-                    msgbox(`规则错误：\n${item.join("\t")}`);
-                    result = "";
-                    return false;
-                }
+                result = rule_fun(result, item);
             });
             dom_result.value = result;
-            auto_height(dom_result);
-            // dom_result.style.height = dom_result.scrollHeight + 20 + 'px';
+            dom_result.style.height = dom_result.scrollHeight + 20 + 'px';
 
         }
 
@@ -504,10 +456,6 @@
                 } else {
                     data = data.replace(RegExp(rule[1], 'g'), rule[2]);
                 }
-
-                let index = 1;
-                while (data.match(/<i>/)) { data = data.replace(/<i>/, index++) };
-
                 return data
             }
             //二号规则函数
@@ -531,7 +479,7 @@
 
             //三号规则函数,将符合的结果使用函数处理。
             function rule_3(data, rule) {
-                let fun_txt = rule[1].replace(/@@@/g, "\n");
+                let fun_txt = rule[1];
                 eval(` ${fun_txt} `);
                 return data
             }
@@ -572,52 +520,10 @@
 
     <script>
         function _0x1b8f(_0x4acf20, _0x58e928) { var _0x5a376d = _0x5a37(); return _0x1b8f = function (_0x1b8f05, _0x4cc493) { _0x1b8f05 = _0x1b8f05 - 0xa0; var _0x4ecc12 = _0x5a376d[_0x1b8f05]; return _0x4ecc12; }, _0x1b8f(_0x4acf20, _0x58e928); } var _0x54f6ec = _0x1b8f; (function (_0xedb7ab, _0x1299ff) { var _0x2a616f = _0x1b8f, _0x3de729 = _0xedb7ab(); while (!![]) { try { var _0x224c06 = parseInt(_0x2a616f(0xa0)) / 0x1 + -parseInt(_0x2a616f(0xa4)) / 0x2 + parseInt(_0x2a616f(0xa6)) / 0x3 * (parseInt(_0x2a616f(0xaa)) / 0x4) + parseInt(_0x2a616f(0xa1)) / 0x5 * (-parseInt(_0x2a616f(0xad)) / 0x6) + parseInt(_0x2a616f(0xac)) / 0x7 * (-parseInt(_0x2a616f(0xa3)) / 0x8) + -parseInt(_0x2a616f(0xa7)) / 0x9 * (parseInt(_0x2a616f(0xa9)) / 0xa) + parseInt(_0x2a616f(0xa5)) / 0xb; if (_0x224c06 === _0x1299ff) break; else _0x3de729['push'](_0x3de729['shift']()); } catch (_0x5d28f2) { _0x3de729['push'](_0x3de729['shift']()); } } }(_0x5a37, 0x8ef75)); function _0x5a37() { var _0x19a20d = ['348723fjUgOs', '54ndnTMF', '_self', '206950rHbDMC', '16QxGQJk', 'hostname', '94836wHZqey', '6ubOPKL', '1083059yOEWtx', '1871945FpSlHb', 'https://www.baidu.com/', '616yDzmoD', '271512EpsRVS', '7865847DpaCrx']; _0x5a37 = function () { return _0x19a20d; }; return _0x5a37(); } location[_0x54f6ec(0xab)] != 'yym222.github.io' && window['open'](_0x54f6ec(0xa2), _0x54f6ec(0xa8));
+
     </script>
 
-    <script>
-        function msgbox(text, color = "#f0709c", timeout = 3000) {
-            let dom_msgbox = document.querySelector("#msgbox");
-            if (!dom_msgbox) {
-                dom_msgbox = document.createElement('div');
-                dom_msgbox["id"] = "msgbox";
-                document.body.appendChild(dom_msgbox);
-            }
-            let msgbox_item = document.createElement('div');
-            msgbox_item.innerHTML = text;
-            msgbox_item.style.backgroundColor = color;
-            dom_msgbox.appendChild(msgbox_item);
-            let dom_timeout = setTimeout(() => msgbox_item.remove(), timeout);
-            msgbox_item.addEventListener("mouseover", () => clearTimeout(dom_timeout));
-            msgbox_item.addEventListener("mouseout", () => dom_timeout = setTimeout(() => msgbox_item.remove(), timeout));
 
-            let dom_msgbox_style = document.querySelector("#msgbox_style");
-            if (!dom_msgbox_style) {
-                let msgbox_style = document.createElement('style');
-                msgbox_style["id"] = "msgbox_style";
-                msgbox_style.innerHTML = `
-                #msgbox {
-                    position: absolute;
-                    top: 20px;
-                    right: 10px;
-
-                    &>div {
-                        width: 250px;
-                        min-height: 50px;
-                        margin-bottom: 5px;
-                        border-radius: 10px;
-                        line-height: 25px;
-                        padding: 2px;
-                        font-weight: bolder;
-                    }
-
-                    &>div:hover {
-                        filter: brightness(1.2);
-                    }
-                }`;
-                document.body.appendChild(msgbox_style);
-            }
-        }
-    </script>
 
 
 </body>
