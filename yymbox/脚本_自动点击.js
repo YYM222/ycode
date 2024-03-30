@@ -343,11 +343,11 @@
             function ground() {
                 if (!arr[i]) {
                     order_click.count++;
-                    yymbox.msgbox(`执行完第 ${order_click.count} 次`, 2000, null, "#df8f27");
+                    yymbox.msgbox(`执行完第 ${order_click.count} 次`, 2000, "250px", "black", "#df8f27");
                     if (order_click.count < order_click.max) {
                         next_click(order_click.list);
                     } else {
-                        yymbox.msgbox("执行完毕。", 5000, null, "#df8f27");
+                        yymbox.msgbox("执行完毕。", 5000, "250px", "black", "#df8f27");
                         order_click.count = 0;
                         order_click.clock = [];
                         item.node.click();

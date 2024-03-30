@@ -150,7 +150,6 @@
         };
 
         const loop = () => {
-            console.log(1);
             time = new Date();
             update();
             render();

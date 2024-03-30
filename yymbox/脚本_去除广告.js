@@ -132,22 +132,6 @@
     }
     get_rule()
 
-    //上传规则到服务器
-    function save_rule() {
-        advert.data_all[location.hostname] = advert.data;
-
-        let data = { path: "/yymbox/advent_rule.txt", data: JSON.stringify(advert.data_all) };
-
-        yymbox.my_ajax(
-            "POST",
-            yymbox.server_url + "/ASP/api-write.asp",
-            data
-        )
-            .then((data) => {
-                alert("已保存至服务器！");
-            });
-    };
-
     // ==================================================================================================
     // ==================================================================================================
 
@@ -158,7 +142,7 @@
 
 打开“添加规则”，右键点击元素可添加规则。
 
-`, 3000, "400px");
+`, 8000, "400px");
     };
     // ==================================================================================================
     // ==================================================================================================
@@ -245,9 +229,9 @@
     }
 
     // ==================================================================================================
+    //保存规则
     // ==================================================================================================
 
-    //保存规则
     yymbox.data[index].children[4].func = (e, item) => {
         advert.data_all[location.hostname] = advert.data;
         fetch(yymbox.server_url).then(res => {
@@ -263,13 +247,25 @@
 
             //判断 查看规则 是否开启,如果没有就开启
             yymbox.data[index].children[3].state ? yymbox.data[index].children[3].node.click() : 0;
-
-
         })
 
     }
 
+    //上传规则到服务器
+    function save_rule() {
+        advert.data_all[location.hostname] = advert.data;
+
+        let data = { path: "/yymbox/advent_rule.txt", data: JSON.stringify(advert.data_all) };
+
+        yymbox.my_ajax("POST", yymbox.server_url + "/ASP/api-write.asp", data)
+            .then((data) => {
+                alert("已保存至服务器！");
+            });
+    };
+
+    // ==================================================================================================
     //保存自定义规则
+    // ==================================================================================================
     yymbox.data[index].children[5].func = (e, item) => {
         let rule = prompt("输入CSS规则。");
         try {

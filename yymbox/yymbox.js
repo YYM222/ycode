@@ -118,79 +118,155 @@ let yymbox = {
             };
         });
     },
-    msgbox: function (text, timeout = 3000, w = "250px", color = "#f0709c") {
+    msgbox: function (obj, ...args) {
+        if (typeof obj == "object") {
+            ({ text= "", delay= 3000, width= "250px", color= "#e9dada", backgroundColor= "#e66a12" } = obj)
+        } else {
+            text = obj;
+            delay = args[0] || 3000;
+            width = args[1] || "250px";
+            color = args[2] || "#e9dada";
+            backgroundColor = args[3] || "#e66a12";
+        };
+
+        function my_drop(el, type = "absolute") {
+            //功能函数--指定对象实现拖动效果
+            //el - 父标签
+            //type - 父标签的方式absolute/fixed
+            let drop_startX, drop_startY;
+            let drop_Parent_startX, drop_Parent_startY;
+
+            el.draggable = true;
+            el.style.position = type;
+            el.style.zIndex = 999999999999999;
+            el.style.margin = "0px 0px";
+            // el.parentNode.style.overflow = 'visible';
+
+            el.addEventListener("dragstart", (e) => {
+                drop_startX = e.offsetX;
+                drop_startY = e.offsetY;
+                if (el.offsetParent) {
+                    drop_Parent_startX = el.offsetParent.offsetLeft;
+                    drop_Parent_startY = el.offsetParent.offsetTop;
+                }
+                e.stopPropagation();
+            });
+
+            if (type == "absolute") {
+                el.addEventListener("dragend", (e) => {
+                    el.style.left = e.pageX - drop_startX - drop_Parent_startX + "px";
+                    el.style.top = e.pageY - drop_startY - drop_Parent_startY + "px";
+                    e.stopPropagation();
+                });
+            } else {
+                el.addEventListener("dragend", (e) => {
+                    let left = e.pageX - drop_startX - document.body.scrollLeft - document.querySelector("html").scrollLeft;
+                    let top = e.pageY - drop_startY - document.body.scrollTop - document.querySelector("html").scrollTop;
+                    el.style.left = left + "px";
+                    el.style.top = top + "px";
+                    el.style.setProperty("--LR", left / window.innerWidth > 0.5 ? 1 : -1)
+                    el.style.setProperty("--LRt", left / window.innerWidth > 0.5 ? "null" : -1);
+                    e.stopPropagation();
+                });
+            }
+
+        };
+
         let dom_msgbox = document.querySelector("#msgbox");
         if (!dom_msgbox) {
             dom_msgbox = document.createElement("div");
             dom_msgbox["id"] = "msgbox";
+            dom_msgbox.innerHTML = `<style>
+                                        #msgbox {
+                                            position: fixed;
+                                            top: 0px;
+                                            left: calc(50% - ${width}/2);
+                                            display: inline-block;
+                                            transition: top, left 0.5s, 0.5s;
+
+                                            &>textarea {
+                                                display: block;
+                                                width: 250px;
+                                                padding: 8px;
+                                                font-weight: bolder;
+                                                outline: none;
+                                                border: none;
+                                                margin-bottom: 5px;
+                                                border-radius: 10px;
+                                                background-color: #e66a12;
+                                                color: rgb(226, 223, 223);
+                                                line-height: 1.3;
+                                                resize: both;
+                                                font-size: 15px;
+                                                overflow: hidden;
+                                                min-height: 0px;
+                                            }
+
+                                            &>textarea:hover {
+                                                filter: brightness(1.1) contrast(120%);
+                                            }
+
+                                        }
+                                    </style>`
             document.body.appendChild(dom_msgbox);
+            my_drop(dom_msgbox, "fixed");
         }
 
-        let msgbox_div = document.createElement("div");
+        let dom_textarea = document.createElement("textarea");
 
-        let msgbox_item = document.createElement("textarea");
-        msgbox_item.innerHTML = text;
-        msgbox_div.style.backgroundColor = color;
-        msgbox_div.style.minWidth = w;
-        msgbox_div.appendChild(msgbox_item);
-        dom_msgbox.appendChild(msgbox_div);
+        dom_textarea.innerHTML = text;
+        dom_textarea.style.backgroundColor = backgroundColor;
+        dom_textarea.style.width = width;
+        dom_textarea.style.color = color;
+        dom_msgbox.appendChild(dom_textarea);
 
-        let dom_timeout = setTimeout(() => msgbox_div.remove(), timeout);
-        msgbox_item.addEventListener("mouseover", () => clearTimeout(dom_timeout));
-        msgbox_item.addEventListener("focus", () => clearTimeout(dom_timeout));
-        msgbox_item.addEventListener("mouseout", () => { if (msgbox_item != document.activeElement) { dom_timeout = setTimeout(() => msgbox_div.remove(), timeout) } });
-        msgbox_item.addEventListener("blur", () => { dom_timeout = setTimeout(() => msgbox_div.remove(), timeout) });
+        setTimeout(() => {
+            let win_h = window.innerHeight;
+            let msg_h = dom_msgbox.getBoundingClientRect().height;
+            if (win_h > msg_h) {
+                dom_msgbox.style.top = (win_h - msg_h) / 3 + "px"
+            } else {
+                dom_msgbox.style.top = "44px"
+            };
+        }, 0);
+
+        let time_textarea;
+        function remove_textarea() {
+            time_textarea = setTimeout(() => {
+                dom_textarea.style.transition = "height 0.8s";
+                dom_textarea.style.height = getComputedStyle(dom_textarea).height;
+                dom_textarea.style.padding = "0px";
+
+                setTimeout(() => dom_textarea.style.height = "0px");
+                setTimeout(() => {
+                    dom_textarea.remove();
+                    if (dom_msgbox.querySelectorAll("textarea").length == 0) { dom_msgbox.remove() };
+                }, 800);
+            }, delay)
+        };
+
+        remove_textarea();
+        dom_textarea.addEventListener("mouseover", () => clearTimeout(time_textarea));
+        dom_textarea.addEventListener("focus", () => clearTimeout(time_textarea));
+        dom_textarea.addEventListener("mouseout", () => { if (dom_textarea != document.activeElement) { remove_textarea() } });
+        dom_textarea.addEventListener("blur", () => { remove_textarea() });
 
         //结果输入框的高度调节
-        function auto_height(el, h = "50px") { el.style.height = h; el.style.height = el.scrollHeight + 20 + 'px' };
-        msgbox_item.addEventListener("input", () => auto_height(msgbox_item));
+        function auto_height(el, h = "40px") { el.style.height = h; el.style.height = el.scrollHeight + 5 + 'px' };
+        dom_textarea.addEventListener("input", () => auto_height(dom_textarea));
 
 
         let dom_msgbox_style = document.querySelector("#msgbox_style");
         if (!dom_msgbox_style) {
             let msgbox_style = document.createElement("style");
             msgbox_style["id"] = "msgbox_style";
-            msgbox_style.innerHTML = `
-                                    #msgbox {
-                                        position: absolute;
-                                        top: 20px;
-                                        right: 10px;
-                                        width:250px;
-                                        
-                                        &>div{
-                                            border-radius: 10px;
-                                            margin-right:auto;
-                                            display: inline-block;
-                                            margin-bottom: 5px;
-
-                                            &>textarea {
-                                                width: 100%;
-                                                display: block;
-                                                min-height: 50px;
-                                                border-radius: 10px;
-                                                line-height: 25px;
-                                                padding: 2px;
-                                                font-weight: bolder;
-                                                outline: none;
-                                                border: none;
-                                                overflow: hidden;
-                                                mix-blend-mode: difference;
-                                                background-color: transparent;
-                                                color:white;
-                                                resize: both;
-                                            }
-    
-                                            &>textarea:hover {
-                                                filter: brightness(1.2);
-                                            }
-                                        }
-                                    }`;
+            msgbox_style.innerHTML = ``;
             document.body.appendChild(msgbox_style);
         }
-        auto_height(msgbox_item);
-        yymbox.my_drop ? yymbox.my_drop(dom_msgbox, "fixed") : 0;
-        let time_dom_msgbox = setInterval(() => { dom_msgbox.querySelector("textarea") ? 1 : (dom_msgbox.remove(), clearInterval(time_dom_msgbox)) }, 5000);
-    },
+
+        auto_height(dom_textarea);
+    }
+    ,
     //模拟复制按钮设置数据
     copy_simula(data) {
         let copy_data = function () {
