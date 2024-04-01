@@ -412,6 +412,7 @@
 
 
         function do_rule() {
+            dom_result.value = "";
             let rule = get_rule_mode_list();
             rule.forEach(item => item[2] ? item[2] = Special_chars(item[2]) : 0);
 
@@ -451,10 +452,20 @@
 
             //一号规则函数
             function rule_1(data, rule) {
+                let j = 1;
+                if (rule[2].match(/<i.*?>/g)) {
+                    j = rule[2].match(/(?<=<i=?)\d+/) || 1;
+                    rule[2] = rule[2].replace(/<i.*?>/g, "<i>");
+                }
+
                 if (rule[1].slice(-3) == " $i") {
                     data = data.replace(RegExp(rule[1].slice(0, -3), 'ig'), rule[2]);
                 } else {
                     data = data.replace(RegExp(rule[1], 'g'), rule[2]);
+                }
+
+                if (data.match(/<i>/g)) {
+                    data.match(/<i>/g).forEach((item, i) => data = data.replace(/<i>/, i + (j - 0)))
                 }
                 return data
             }
@@ -512,7 +523,17 @@
         }
 
 
-
+        //数据栏双击保存到本地
+        dom_data.ondblclick = function () {
+            let local_data = localStorage.getItem("dom_data");
+            if (dom_data.value == "" && local_data) {
+                dom_data.value = local_data;
+                dom_result.value = "成功提取数据。";
+            } else {
+                localStorage.setItem("dom_data", dom_data.value);
+                dom_result.value = "成功保存数据。";
+            }
+        }
 
 
 
