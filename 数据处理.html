@@ -146,6 +146,8 @@
 
         #rule_list {
             margin: 20px 0px;
+            max-height: 200px;
+            overflow: auto;
 
             .rule_mode {
                 display: flex;
@@ -462,6 +464,7 @@
                     result = rule_fun(result, item);
                 } catch (error) {
                     msgbox(`规则错误：\n${item.join("\t")}`);
+                    msgbox(`${error}`);
                     result = "";
                     return false;
                 }
@@ -569,19 +572,21 @@
     </script>
 
     <script>
-        function _0x1b8f(_0x4acf20, _0x58e928) { var _0x5a376d = _0x5a37(); return _0x1b8f = function (_0x1b8f05, _0x4cc493) { _0x1b8f05 = _0x1b8f05 - 0xa0; var _0x4ecc12 = _0x5a376d[_0x1b8f05]; return _0x4ecc12; }, _0x1b8f(_0x4acf20, _0x58e928); } var _0x54f6ec = _0x1b8f; (function (_0xedb7ab, _0x1299ff) { var _0x2a616f = _0x1b8f, _0x3de729 = _0xedb7ab(); while (!![]) { try { var _0x224c06 = parseInt(_0x2a616f(0xa0)) / 0x1 + -parseInt(_0x2a616f(0xa4)) / 0x2 + parseInt(_0x2a616f(0xa6)) / 0x3 * (parseInt(_0x2a616f(0xaa)) / 0x4) + parseInt(_0x2a616f(0xa1)) / 0x5 * (-parseInt(_0x2a616f(0xad)) / 0x6) + parseInt(_0x2a616f(0xac)) / 0x7 * (-parseInt(_0x2a616f(0xa3)) / 0x8) + -parseInt(_0x2a616f(0xa7)) / 0x9 * (parseInt(_0x2a616f(0xa9)) / 0xa) + parseInt(_0x2a616f(0xa5)) / 0xb; if (_0x224c06 === _0x1299ff) break; else _0x3de729['push'](_0x3de729['shift']()); } catch (_0x5d28f2) { _0x3de729['push'](_0x3de729['shift']()); } } }(_0x5a37, 0x8ef75)); function _0x5a37() { var _0x19a20d = ['348723fjUgOs', '54ndnTMF', '_self', '206950rHbDMC', '16QxGQJk', 'hostname', '94836wHZqey', '6ubOPKL', '1083059yOEWtx', '1871945FpSlHb', 'https://www.baidu.com/', '616yDzmoD', '271512EpsRVS', '7865847DpaCrx']; _0x5a37 = function () { return _0x19a20d; }; return _0x5a37(); } location[_0x54f6ec(0xab)] != 'yym222.github.io' && window['open'](_0x54f6ec(0xa2), _0x54f6ec(0xa8));
+         function _0x1b8f(_0x4acf20, _0x58e928) { var _0x5a376d = _0x5a37(); return _0x1b8f = function (_0x1b8f05, _0x4cc493) { _0x1b8f05 = _0x1b8f05 - 0xa0; var _0x4ecc12 = _0x5a376d[_0x1b8f05]; return _0x4ecc12; }, _0x1b8f(_0x4acf20, _0x58e928); } var _0x54f6ec = _0x1b8f; (function (_0xedb7ab, _0x1299ff) { var _0x2a616f = _0x1b8f, _0x3de729 = _0xedb7ab(); while (!![]) { try { var _0x224c06 = parseInt(_0x2a616f(0xa0)) / 0x1 + -parseInt(_0x2a616f(0xa4)) / 0x2 + parseInt(_0x2a616f(0xa6)) / 0x3 * (parseInt(_0x2a616f(0xaa)) / 0x4) + parseInt(_0x2a616f(0xa1)) / 0x5 * (-parseInt(_0x2a616f(0xad)) / 0x6) + parseInt(_0x2a616f(0xac)) / 0x7 * (-parseInt(_0x2a616f(0xa3)) / 0x8) + -parseInt(_0x2a616f(0xa7)) / 0x9 * (parseInt(_0x2a616f(0xa9)) / 0xa) + parseInt(_0x2a616f(0xa5)) / 0xb; if (_0x224c06 === _0x1299ff) break; else _0x3de729['push'](_0x3de729['shift']()); } catch (_0x5d28f2) { _0x3de729['push'](_0x3de729['shift']()); } } }(_0x5a37, 0x8ef75)); function _0x5a37() { var _0x19a20d = ['348723fjUgOs', '54ndnTMF', '_self', '206950rHbDMC', '16QxGQJk', 'hostname', '94836wHZqey', '6ubOPKL', '1083059yOEWtx', '1871945FpSlHb', 'https://www.baidu.com/', '616yDzmoD', '271512EpsRVS', '7865847DpaCrx']; _0x5a37 = function () { return _0x19a20d; }; return _0x5a37(); } location[_0x54f6ec(0xab)] != 'yym222.github.io' && window['open'](_0x54f6ec(0xa2), _0x54f6ec(0xa8));
     </script>
 
     <script>
         function msgbox(obj, ...args) {
             if (typeof obj == "object") {
-                ({ text= "", delay= 3000, width= "250px", color= "#e9dada", backgroundColor= "#e66a12" } = obj)
+                ({ text= "", delay= 3000, width= "250px", color= "#e9dada", backgroundColor= "#e66a12", top="0px", left=`calc(50% - ${width}/2)` } = obj)
             } else {
                 text = obj;
                 delay = args[0] || 3000;
                 width = args[1] || "250px";
                 color = args[2] || "#e9dada";
                 backgroundColor = args[3] || "#e66a12";
+                top = "0px";
+                left = `calc(50% - ${width}/2)`;
             };
 
             function my_drop(el, type = "absolute") {
@@ -634,8 +639,8 @@
                 dom_msgbox.innerHTML = `<style>
                                         #msgbox {
                                             position: fixed;
-                                            top: 0px;
-                                            left: calc(50% - ${width}/2);
+                                            top: ${top};
+                                            left: ${left};
                                             display: inline-block;
                                             transition: top, left 0.5s, 0.5s;
 
