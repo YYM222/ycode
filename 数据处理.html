@@ -105,7 +105,7 @@
                     font-weight: bolder;
                     border: none;
                     min-width: 75px;
-                    mask-image: url(https://yym222.github.io/ycode/Img/mask.png);
+                    mask-image: url(https://yym222.github.io/ycode/Img/mask.png), linear-gradient(0deg, #000000 0%, #000000 100%);
                     mask-size: 100%;
 
                     &:active {
@@ -256,9 +256,9 @@
         function clear_arr(arr) { arr.filter(item => item != "") };
 
         //结果输入框的高度调节
-        function auto_height(el, h = "400px") {
-            el.style.height = h;
-            el.style.height = el.scrollHeight + 20 + 'px';
+        function auto_height(el) {
+            el.style.height = el.scrollHeight - 0 + 'px';
+            setTimeout(() => { el.style.height = el.scrollHeight + 20 + 'px' }, 100);
         };
         dom_result.addEventListener("input", () => auto_height(dom_result));
 
@@ -717,7 +717,7 @@
             dom_textarea.addEventListener("blur", () => { remove_textarea() });
 
             //结果输入框的高度调节
-            function auto_height(el, h = "40px") { el.style.height = h; el.style.height = el.scrollHeight + 5 + 'px' };
+            function auto_height(el) { el.style.height = el.scrollHeight - 4 + 'px' };
             dom_textarea.addEventListener("input", () => auto_height(dom_textarea));
 
 
