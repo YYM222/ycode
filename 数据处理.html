@@ -366,7 +366,7 @@
         //将规则数组转为html文本，添加到dom树上。
         function add_rule_mode(index, rule_detail) {
             let txt = "";
-            let arr = [index, ...rule_detail]
+            let arr = [index, rule_detail]
             arr[1] = arr[1] || "";
             arr[2] = arr[2] || "";
             del_svg = ` <div class="icon-twrap" onclick='del_rule(event)'>
