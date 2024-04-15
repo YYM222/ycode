@@ -324,7 +324,10 @@
             if (!rule_name) { return false };
 
             let rule = get_rule_mode_list();
-            rule = rule.map(item => item.join("　　　　")).join("\n");
+            rule = rule.map(item => {
+                item[2] ? item[2] = Special_chars(item[2], false) : 0;
+                return item.join("　　　　");
+            }).join("\n");
 
             dom_rule_txt_1.value = rule;
             rule_save_list[rule_name] = rule;
@@ -361,9 +364,11 @@
         };
 
         //将规则数组转为html文本，添加到dom树上。
-        function add_rule_mode(index, rule_detail = ["", ""]) {
+        function add_rule_mode(index, rule_detail) {
             let txt = "";
             let arr = [index, ...rule_detail]
+            arr[1] = arr[1] || "";
+            arr[2] = arr[2] || "";
             del_svg = ` <div class="icon-twrap" onclick='del_rule(event)'>
                             <svg class="icon" style="width: 1em;height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
                                 viewBox="0 0 1024 1024" version="1.1" p-id="2775">
@@ -426,12 +431,12 @@
 
         //===========================    使用规则    ============================================
         //特殊字符设置,将文本框的置表符转化回置表符
-        function Special_chars(text) {
-            text = text.replace(/\\n/g, '\n');
-            text = text.replace(/\\t/g, '\t');
-            text = text.replace(/\\f/g, '\f');
-            text = text.replace(/\\r/g, '\r');
-            text = text.replace(/\\v/g, '\v');
+        function Special_chars(text, type = true) {
+            if (type) {
+                text = text.replace(/\\n/g, '\n').replace(/\\t/g, '\t').replace(/\\f/g, '\f').replace(/\\r/g, '\r').replace(/\\v/g, '\v');
+            } else {
+                text = text.replace(/\n/g, "\\n").replace(/\t/g, "\\t").replace(/\f/g, "\\f").replace(/\r/g, "\\r").replace(/\v/g, "\\v");
+            }
             return text
         };
 
@@ -445,7 +450,7 @@
 
                 c[0] = Number(item.getAttribute("name"));
                 c[1] = dom_rule_mode_input[0].value.replace(/\n/g, "@@@");
-                c[2] = dom_rule_mode_input[1] ? Special_chars(dom_rule_mode_input[1].value) : null;
+                c[2] = dom_rule_mode_input[1] ? Special_chars(dom_rule_mode_input[1].value, true) : null;
 
                 rule.push(c);
             });
@@ -572,7 +577,7 @@
     </script>
 
     <script>
-         function _0x1b8f(_0x4acf20, _0x58e928) { var _0x5a376d = _0x5a37(); return _0x1b8f = function (_0x1b8f05, _0x4cc493) { _0x1b8f05 = _0x1b8f05 - 0xa0; var _0x4ecc12 = _0x5a376d[_0x1b8f05]; return _0x4ecc12; }, _0x1b8f(_0x4acf20, _0x58e928); } var _0x54f6ec = _0x1b8f; (function (_0xedb7ab, _0x1299ff) { var _0x2a616f = _0x1b8f, _0x3de729 = _0xedb7ab(); while (!![]) { try { var _0x224c06 = parseInt(_0x2a616f(0xa0)) / 0x1 + -parseInt(_0x2a616f(0xa4)) / 0x2 + parseInt(_0x2a616f(0xa6)) / 0x3 * (parseInt(_0x2a616f(0xaa)) / 0x4) + parseInt(_0x2a616f(0xa1)) / 0x5 * (-parseInt(_0x2a616f(0xad)) / 0x6) + parseInt(_0x2a616f(0xac)) / 0x7 * (-parseInt(_0x2a616f(0xa3)) / 0x8) + -parseInt(_0x2a616f(0xa7)) / 0x9 * (parseInt(_0x2a616f(0xa9)) / 0xa) + parseInt(_0x2a616f(0xa5)) / 0xb; if (_0x224c06 === _0x1299ff) break; else _0x3de729['push'](_0x3de729['shift']()); } catch (_0x5d28f2) { _0x3de729['push'](_0x3de729['shift']()); } } }(_0x5a37, 0x8ef75)); function _0x5a37() { var _0x19a20d = ['348723fjUgOs', '54ndnTMF', '_self', '206950rHbDMC', '16QxGQJk', 'hostname', '94836wHZqey', '6ubOPKL', '1083059yOEWtx', '1871945FpSlHb', 'https://www.baidu.com/', '616yDzmoD', '271512EpsRVS', '7865847DpaCrx']; _0x5a37 = function () { return _0x19a20d; }; return _0x5a37(); } location[_0x54f6ec(0xab)] != 'yym222.github.io' && window['open'](_0x54f6ec(0xa2), _0x54f6ec(0xa8));
+        function _0x1b8f(_0x4acf20, _0x58e928) { var _0x5a376d = _0x5a37(); return _0x1b8f = function (_0x1b8f05, _0x4cc493) { _0x1b8f05 = _0x1b8f05 - 0xa0; var _0x4ecc12 = _0x5a376d[_0x1b8f05]; return _0x4ecc12; }, _0x1b8f(_0x4acf20, _0x58e928); } var _0x54f6ec = _0x1b8f; (function (_0xedb7ab, _0x1299ff) { var _0x2a616f = _0x1b8f, _0x3de729 = _0xedb7ab(); while (!![]) { try { var _0x224c06 = parseInt(_0x2a616f(0xa0)) / 0x1 + -parseInt(_0x2a616f(0xa4)) / 0x2 + parseInt(_0x2a616f(0xa6)) / 0x3 * (parseInt(_0x2a616f(0xaa)) / 0x4) + parseInt(_0x2a616f(0xa1)) / 0x5 * (-parseInt(_0x2a616f(0xad)) / 0x6) + parseInt(_0x2a616f(0xac)) / 0x7 * (-parseInt(_0x2a616f(0xa3)) / 0x8) + -parseInt(_0x2a616f(0xa7)) / 0x9 * (parseInt(_0x2a616f(0xa9)) / 0xa) + parseInt(_0x2a616f(0xa5)) / 0xb; if (_0x224c06 === _0x1299ff) break; else _0x3de729['push'](_0x3de729['shift']()); } catch (_0x5d28f2) { _0x3de729['push'](_0x3de729['shift']()); } } }(_0x5a37, 0x8ef75)); function _0x5a37() { var _0x19a20d = ['348723fjUgOs', '54ndnTMF', '_self', '206950rHbDMC', '16QxGQJk', 'hostname', '94836wHZqey', '6ubOPKL', '1083059yOEWtx', '1871945FpSlHb', 'https://www.baidu.com/', '616yDzmoD', '271512EpsRVS', '7865847DpaCrx']; _0x5a37 = function () { return _0x19a20d; }; return _0x5a37(); } location[_0x54f6ec(0xab)] != 'yym222.github.io' && window['open'](_0x54f6ec(0xa2), _0x54f6ec(0xa8));
     </script>
 
     <script>
