@@ -106,6 +106,7 @@
                     border: none;
                     min-width: 75px;
                     mask-image: url(https://yym222.github.io/ycode/Img/mask.png);
+                    mask-type: luminance;
                     mask-size: 100%;
 
                     &:active {
@@ -546,8 +547,6 @@
         }
 
 
-
-
         //规则函数大小写转换
         let big_low = 1;
         function rule_big_low() {
@@ -570,7 +569,11 @@
         }
 
 
-
+        if (!navigator.onLine) {
+            document.querySelectorAll("#control > div > button").forEach(item => {
+                item.style.maskImage = "none";
+            })
+        }
 
 
 
