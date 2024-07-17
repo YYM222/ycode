@@ -1,0 +1,94 @@
+<textarea id="data"></textarea>
+<div id="control">
+  <button onclick="PPP()">筛选</button>
+  <button onclick="AAA()">全选</button>
+  <button onclick="CCC()">清除本地缓存</button>
+  <button onclick="CCC()">清除本地缓存</button>
+  <button onclick="DDD()">复制不重复的数据</button>
+  <button onclick="EEE()">复制缓存数据</button>
+</div>
+<textarea id="result"></textarea>
+
+<style>
+  #data,
+  #result {
+    width: 100%;
+    height: 30%;
+  }
+
+  #control {
+    margin: 5% 0%;
+
+    &>button {
+      margin: 0% 0.5%;
+      height: 10%;
+      padding: 5%;
+      line-height: 10%;
+      font-size: 1em;
+      background-color: #4ad545;
+    }
+  }
+</style>
+
+<script>
+  //模拟复制按钮设置数据
+  let copy_simula = function (data) {
+    let copy_data = function () {
+      if (event.clipboardData || event.originalEvent) {
+        var clipboardData = (event.clipboardData || event.originalEvent.clipboardData);
+        clipboardData.setData('text/plain', data);
+        event.preventDefault();
+      }
+    };
+
+    let origina_copy = event => { event.stopPropagation(); event.preventDefault() };
+    document.addEventListener('copy', origina_copy, true);
+    document.addEventListener("copy", copy_data, true);
+    document.execCommand("copy");
+    document.removeEventListener("copy", copy_data, true);
+    document.removeEventListener("copy", origina_copy, true);
+
+  }
+
+  let dom_data = document.querySelector("#data");
+  let dom_result = document.querySelector("#result");
+
+
+  let PPP = function () {
+    let result_old = JSON.parse(localStorage.getItem("result")) || [];
+    let result = [];
+
+    dom_result.value = result_old.join("\n");
+
+    let data = dom_data.value.match(/[\w+-=_\?]{18,199}/g);
+    data = [...new Set(data)];
+
+    data.forEach(item => {
+      result_old.includes(item) ? 0 : (result.push(item), result_old.push(item));
+    })
+
+    localStorage.setItem("result", JSON.stringify(result_old));
+    dom_result.value = result_old.join("\n");
+
+    dom_data.value = result.join("\n");
+    copy_simula(result.join("\n"));
+  }
+
+
+  AAA = function () {
+    dom_data.select();
+  }
+
+  CCC = function () {
+    localStorage.clear();
+  }
+
+  DDD = function () {
+    copy_simula(dom_data.value);
+  }
+
+  EEE = function () {
+    copy_simula(dom_result.value);
+  }
+
+</script>
