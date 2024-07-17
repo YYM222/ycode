@@ -4,7 +4,7 @@
 <div id="control">
   <button onclick="PPP()">筛选</button>
   <button onclick="AAA()">全选</button>
-  <button onclick="CCC()">清除本地缓存</button>
+  <button onclick="BBB()">清除数据框</button>
   <button onclick="CCC()">清除本地缓存</button>
   <button onclick="DDD()">复制不重复的数据</button>
   <button onclick="EEE()">复制缓存数据</button>
@@ -81,6 +81,10 @@
     dom_data.select();
   }
 
+    BBB = function () {
+    dom_data.value = "";
+  }
+  
   CCC = function () {
     localStorage.clear();
   }
