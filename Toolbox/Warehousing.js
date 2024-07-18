@@ -52,7 +52,7 @@ let copy_simula = function (data) {
 }
 
 a.onclick = () => {
-    let result = document.querySelector("#grid_Content > table.fixstyle").innerText.replace(/\n(\t+)\n/g, "$1").replace(/\n\n\n/g, "\n").replace(/.+\t[ABCEFGH].+\n/g, "");
+    let result = document.body.querySelectorAll("iframe")[2].contentDocument.querySelector("#grid_Content > table.fixstyle").innerText.replace(/\n(\t+)\n/g, "$1").replace(/\n\n\n/g, "\n").replace(/.+\t[ABCEFGH].+\n/g, "");
     let arr =result.split("\n").map(item => item.split("\t"));
     window.copy_data = arr;
     arr.forEach((item,i,r)=> {
