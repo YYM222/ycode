@@ -1,21 +1,21 @@
 <body>
   <meta id="viewport" name="viewport" content="width=device-width;maximum-scale=1.0;user-scalable=no;" />
-<textarea id="data"></textarea>
-<div id="control">
-  <button onclick="PPP()">筛选</button>
-  <button onclick="AAA()">全选</button>
-  <button onclick="BBB()">清除数据框</button>
-  <button onclick="CCC()">清除本地缓存</button>
-  <button onclick="DDD()">复制不重复的数据</button>
-  <button onclick="EEE()">复制缓存数据</button>
-</div>
-<textarea id="result"></textarea>
+  <textarea id="data"></textarea>
+  <div id="control">
+    <button onclick="PPP()">筛选</button>
+    <button onclick="AAA()">全选</button>
+    <button onclick="BBB()">清除数据框</button>
+    <button onclick="CCC()">清除本地缓存</button>
+    <button onclick="DDD()">复制不重复的数据</button>
+    <button onclick="EEE()">复制缓存数据</button>
+  </div>
+  <textarea id="result"></textarea>
 </body>
 <style>
   #data,
   #result {
-    width: 100%;
-    height: 30%;
+    width: 60%;
+    height: 20%;
   }
 
   #control {
@@ -23,11 +23,13 @@
 
     &>button {
       margin: 0% 0.5%;
-    height: 4%;
-    padding: 2%;
-      line-height: 4%;
-      font-size: 1em;
+      height: 10%;
+      width: 30%;
+      padding: 5%;
+      line-height: 10%;
+      font-size: 2em;
       background-color: #4ad545;
+      white-space: nowrap;
     }
   }
 </style>
@@ -81,12 +83,14 @@
     dom_data.select();
   }
 
-    BBB = function () {
+  BBB = function () {
     dom_data.value = "";
   }
-  
+
   CCC = function () {
-    localStorage.clear();
+    if (confirm()) {
+      localStorage.clear();
+    }
   }
 
   DDD = function () {
