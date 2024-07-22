@@ -1,10 +1,8 @@
 <body>
-  <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover" />
-  <textarea id="data"></textarea>
+  <meta name="viewport"
+    content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover" />
   <div id="control">
     <button onclick="PPP()">筛选</button>
-    <button onclick="AAA()">全选</button>
-    <button onclick="BBB()">清除数据框</button>
     <button onclick="CCC()">清除本地缓存</button>
     <button onclick="DDD()">复制不重复的数据</button>
     <button onclick="EEE()">复制缓存数据</button>
@@ -12,10 +10,9 @@
   <textarea id="result"></textarea>
 </body>
 <style>
-  #data,
   #result {
     width: 90%;
-    height: 25%;
+    height: 60%;
   }
 
   #control {
@@ -54,17 +51,18 @@
 
   }
 
-  let dom_data = document.querySelector("#data");
   let dom_result = document.querySelector("#result");
+  let result_data = "";
 
 
-  let PPP = function () {
+  let PPPP = function (data) {
+
     let result_old = JSON.parse(localStorage.getItem("result")) || [];
     let result = [];
 
     dom_result.value = result_old.join("\n");
 
-    let data = dom_data.value.match(/[\w+-=_\?]{18,199}/g);
+    data = data.match(/[\w+-=_\?]{18,199}/g);
     data = [...new Set(data)];
 
     data.forEach(item => {
@@ -74,18 +72,26 @@
     localStorage.setItem("result", JSON.stringify(result_old));
     dom_result.value = result_old.join("\n");
 
-    dom_data.value = result.join("\n");
-    copy_simula(result.join("\n"));
+    result_data = result.join("\n");
+    copy_simula(result_data);
+    alert(result.length);
+  }
+
+  let PPP = async () => {
+    let data = "";
+    try {
+      const clipboardData = await navigator.clipboard.readText();
+      data = clipboardData;
+    } catch (error) {
+      data = prompt();
+    }
+
+    await PPPP(data)
   }
 
 
-  AAA = function () {
-    dom_data.select();
-  }
 
-  BBB = function () {
-    dom_data.value = "";
-  }
+
 
   CCC = function () {
     if (confirm()) {
@@ -94,11 +100,12 @@
   }
 
   DDD = function () {
-    copy_simula(dom_data.value);
+    copy_simula(result_data);
   }
 
   EEE = function () {
     copy_simula(dom_result.value);
   }
+
 
 </script>
