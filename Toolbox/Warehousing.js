@@ -53,7 +53,7 @@ let copy_simula = function (data) {
 
 a.onclick = () => {
     let result = document.body.querySelectorAll("iframe")[3].contentDocument.querySelector("#scrollBody > table > tbody").innerText.replace(/\n(\t+)\n/g, "$1").replace(/\n\n\n/g, "\n").replace(/.+\t[ABCEFGH].+\n/g, "");
-    let arr =result.split("\n").map(item => item.split("\t"));
+    let arr = result.split("\n").filter(item => item.length>10).map(item => item.split("\t").slice(1));
     window.copy_data = arr;
     arr.forEach((item,i,r)=> {
         item[0]==""?item[0] = r[i-1][0]:0;
