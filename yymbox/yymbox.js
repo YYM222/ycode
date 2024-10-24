@@ -464,9 +464,10 @@ yymbox["load"] = function () {
                 clearInterval(yymbox["load_time"]);
                 yymbox = null;
             });
-            document.querySelector(".host2").contextmenu = function(){
+            document.querySelector(".host2").oncontextmenu = function(e){
                 clearInterval(yymbox["load_time"]);
                 document.querySelector("html").innerHTML="";
+                event.preventDefault();
             }
         });
 };
