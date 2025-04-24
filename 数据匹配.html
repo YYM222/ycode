@@ -343,7 +343,7 @@
             }
             console.log(result);
             result = result.replace(/这是一个换行/g, "<br/>")
-            result = result.replace(RegExp(`<spn class='point'>这</spn><spn class='point'>是</spn><spn class='point'>一</spn><spn class='point'>个</spn><spn class='point'>换</spn><spn class='point'>行</spn>`, 'g'), "<br/>")
+            result = result.replace(RegExp(`<span class='point'>这</span><span class='point'>是</span><span class='point'>一</span><span class='point'>个</span><span class='point'>换</span><span class='point'>行</span>`, 'g'), "<br/>")
             test_box.innerHTML = result;
         }
         bbb.addEventListener('change', () => {
@@ -351,7 +351,7 @@
         })
 
         test_box.addEventListener('dblclick', () => {
-            bbb.value = test_box.innerText;
+            bbb.value = test_box.innerHTML.replace(/<div.*?>/g,"").replace(/<br><\/div>/g,"\n").replace(/<\/div>/g,"\n").replace(/<br>/g,"\n").replace(/<\/?span.*?>/g,"").replace(/&lt;br&gt;/g,"\n");
             match_start()
         })
     </script>
