@@ -331,6 +331,7 @@
             }).join("\n");
 
             dom_rule_txt_1.value = rule;
+            rule_save_list = rule_save_list||{};
             rule_save_list[rule_name] = rule;
             for (let key in rule_save_list) { rule_save_list[key] == "" ? delete rule_save_list[key] : true };
             localStorage.setItem('rule', JSON.stringify(rule_save_list));
