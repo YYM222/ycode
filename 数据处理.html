@@ -260,11 +260,24 @@
         function clear_arr(arr) { arr.filter(item => item != "") };
 
         //结果输入框的高度调节
+        //结果输入框的高度调节
         function auto_height(el) {
-            el.style.height = el.scrollHeight - 0 + 'px';
-            setTimeout(() => { el.style.height = el.scrollHeight + 20 + 'px' }, 100);
+            let key = Object.keys(el);
+            let dom = el[key];
+
+            if (dom.value.split("\n").length < 25) { dom.style.height = "400px"; return false; };
+            dom.style.height = (getComputedStyle(dom).fontSize.match(/\d+/) / 0.85) * dom.value.split("\n").length + 'px';
+
+            (function () {
+                let scroll_top = key + "_scrollTop";
+                if (typeof (window[scroll_top]) != "undefined") { return false; }
+                window[scroll_top] = 0;
+                dom.addEventListener('keydown', (e) => { if (e.key === 'Enter') { window[scroll_top] = document.body.scrollTop; } });
+                dom.addEventListener('keyup', (e) => { if (e.key === 'Enter') { setTimeout(() => { document.body.scrollTo(0, window[scroll_top]); }, 1); } });
+            })();
         };
-        dom_result.addEventListener("input", () => auto_height(dom_result));
+        
+        dom_result.addEventListener("input", () => auto_height({ dom_result }));
 
 
         //引用规则
@@ -480,8 +493,7 @@
                 }
             });
             dom_result.value = result;
-            auto_height(dom_result);
-            // dom_result.style.height = dom_result.scrollHeight + 20 + 'px';
+            auto_height({dom_result});
 
         }
 
