@@ -46,8 +46,8 @@
         <p>规则2：获取符合筛选的结果</p>
         <p>规则3：写入函数，可直接运行。data为文本，file_name为文件名。</p>
         <p>其他：【中文匹配：[\u4e00-\u9fa5]。】</p>
-        <p>正向排序　　　　　　data = data.split("\n").sort().join("\n");</p>
-        <p>反向排序　　　　　　data = data.split("\n").sort().reverse().join("\n");</p>
+        <p>正向排序　　　　　　data = data.split("\n").sort(naturalSort).join("\n");</p>
+        <p>反向排序　　　　　　data = data.split("\n").sort(naturalSort).reverse().join("\n");</p>
         <p>数据去重　　　　　　data = [...new Set(data.split("\n"))].join("\n");</p>
         <p></p>
     </div>
@@ -217,7 +217,11 @@
             height: 400px;
         }
     </style>
-
+    
+    <script>
+        function naturalSort(a, b) { const regex = /(\d+)|(\D+)/g; const aParts = a.match(regex), bParts = b.match(regex); for (let i = 0; i < Math.min(aParts.length, bParts.length); i++) { if (/\d/.test(aParts[i]) && /\d/.test(bParts[i])) { if (parseInt(aParts[i]) !== parseInt(bParts[i])) return parseInt(aParts[i]) - parseInt(bParts[i]); } else { const cmp = aParts[i].localeCompare(bParts[i]); if (cmp !== 0) return cmp; } } return a.length - b.length; }
+    </script>
+    
     <script>
         let dom_data = document.querySelector("#data");
         let dom_result = document.querySelector("#result");
