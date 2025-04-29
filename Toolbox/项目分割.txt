@@ -1,0 +1,16 @@
+    let node_split = function (txt, n) {
+        let arr = txt.split("\n");
+        let result = [];
+        arr.forEach((item, i) => {
+            let l = (i + 1) % n;
+            result[l] = result[l] || [];
+            result[l].push(item);
+        });
+        result[n] = result[0];
+        result.splice(0, 1);
+        result = result.map(item => item.join("\t")).join("\n");
+        console.log(result);
+        return result;
+    };
+
+data = node_split(data,2)

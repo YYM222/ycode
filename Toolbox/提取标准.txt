@@ -1,0 +1,95 @@
+1　　　　\n　　　　 
+1　　　　(\.\.+)　　　　
+1　　　　(-\.+)　　　　-
+1　　　　( )+　　　　$1
+1　　　　No[\. ]　　　　
+1　　　　CPSAnalytical　　　　
+1　　　　Consumer Product Safety Improvement Act　　　　CPSIA
+1　　　　Children's Safe Products Act　　　　CSPA
+1　　　　California Proposition 65　　　　CA65
+1　　　　Polycyclic Aromatic Hydrocarbons　　　　PAHs
+1　　　　Consumer Product Safety Commission　　　　CPSC
+1　　　　Toxic Substances Control Act　　　　TSCA
+1　　　　Persistent, Bioaccumulative and Toxic　　　　PBTs
+1　　　　CHILDREN’S PRODUCT CERTIFICATE　　　　CPC认证
+1　　　　Primary Aromatic Amine　　　　PAA
+1　　　　Canada Consumer Product Safety Act　　　　CCPSA
+1　　　　Consumer Product Safety Act　　　　CPSA
+1　　　　(882[2345])\) 　　　　$1
+1　　　　Polycyclic　　　　PAHs
+1　　　　Canada　　　　加拿大
+1　　　　Australia　　　　澳大利亚
+1　　　　German　　　　德国
+1　　　　Polska　　　　波兰
+1　　　　( fail[ \(]) $i　　　　【【5-Fail】】
+1　　　　((Lithium-ion Batter|COMO|FBANM|MPRH|GBHK|GUTE|AMZ|AYD|BBM|BES|BHK|CZD|ECO|FOX|FZP|INC|JDM|MHK|NHK|PKB|SGE|SHK|SIS|SKU|TMA|TPS|UTE)[\w-]+|锂离子电池|锂离子可充电电芯)　　　　【【1-编号：$1】】
+1　　　　((date|日期|period)(.(?!date|日期|\n)){1,50}) $i　　　　【【2-日期：$1】】
+1　　　　((22AE|\d\d\.452.|5126|64.4|66.4|68.4|6845|8822|8823|BCTC|C23-|E01A|GZHH|GZHL|HST2|KAS2|NACC|T522|T523|T524|U009|WTA2|WTZ2|WZ23|X23-|8824|C24-|T524|WZ24|X24-|24AE|TCT)[\w-\)\.]+)　　　　【【3-报告：$1】】
+1　　　　(加拿大|澳大利亚|德国|波兰)　　　　【【4-国家：$1】】
+1　　　　(?<=[ \(])(SVHC|CE marking|CPC认证|ASTM|REACH|LFGB|CPSIA|CPSC|CCPSA|CSPA|CPSA|CA65|FDA|TSCA|CFR|CPG \d+)　　　　【【法规：$1】】
+1　　　　(\([EUC]+\)[No\. ]+\d+/\d+)　　　　【【法规：$1】】
+1　　　　(Australia Competition and Consumer Act 2010|Consumer Protection Notice No. 11 of 2011)　　　　【【法规：$1】】
+1　　　　(EN[\d ]+)　　　　【【法规：$1】】
+1　　　　(Washington Bill HB 2647)　　　　【【法规：$1】】
+1　　　　(Australian Trade Practice Act 1974)　　　　【【法规：$1】】
+1　　　　(Material Safety Data Sheet|MSDS)　　　　【【法规：$1】】
+1　　　　(SOR[\d/]+)　　　　【【法规：$1】】
+1　　　　(A[Ff]PS[ GS\d: PAK]+)　　　　【【法规：$1】】
+1　　　　(([\d\.]* [inofr]+ )*GB\\?/?[Tt\d\. -]+)　　　　【【法规：$1】】
+1　　　　(AS/NZS[ISO \d]+)　　　　【【法规：$1】】
+1　　　　(ResAP[\d /\.-]+)　　　　【【法规：$1】】
+1　　　　([\d /]+EEC)　　　　【【法规：$1】】
+1　　　　(S\.C\.2\d+)　　　　【【法规：$1】】
+1　　　　(US Public Law 110-314)　　　　【【法规：$1】】
+1　　　　(生物化学实验原理和方法)　　　　【【法规：$1】】
+1　　　　(Article 3 of European Regulation No. 1935/2004)　　　　【【法规：欧洲法规1935/2004第3条】】
+1　　　　(ICR)　　　　【【法规：$1 CE认证】】
+1　　　　(ST/SG/AC.10/11/Rev.6|关于危险货物运输的建议书|联合国关于危险品运输建议书)　　　　【【法规：$1】】
+1　　　　(bite endurance|abuse|flexible|Color Fastness|foodstuffs-Insulated|吸光度|抑制率|Specific Migration|PAA|Migration of Certain Elements|PBT|Flammabilit|Physical|Labels|General And Mechanical Requirements|Mechanical requirements|General requirements|Reflux|SCCP|Peroxide|BPA|Phthalate|Sensory|PAHs|Overall Migration|Migration of certain elements|Extractable|Volatile Organic|DEHP) $i　　　　【【项目：$1】】
+1　　　　(lead|Mercury|Lead|Cadmium|Platinum|Arsenic|Barium|Chromium|Antimony|Selenium) $i　　　　【【金属：$1】】
+2　　　　【【.*?】】　　　　
+1　　　　[【】]　　　　
+1　　　　\(　　　　（
+1　　　　\)　　　　）
+1　　　　(AS/NZS 8124)　　　　AS/NZS ISO 8124
+1　　　　Peroxide $i　　　　过氧化物
+1　　　　Phthalate $i　　　　邻苯二甲酸酯
+1　　　　PAHs $i　　　　多环芳烃
+1　　　　Sensory $i　　　　感观测试
+1　　　　(Migration of certain elements|Migration of Certain Elements) $i　　　　元素迁移量
+1　　　　Overall Migration $i　　　　总迁移量
+1　　　　Specific Migration $i　　　　特定迁移
+1　　　　Extractable $i　　　　萃取测试
+1　　　　Volatile Organic $i　　　　挥发性有机物
+1　　　　Reflux $i　　　　回流测试
+1　　　　General requirements $i　　　　一般要求
+1　　　　Mechanical requirements $i　　　　机械要求
+1　　　　General And Mechanical Requirements $i　　　　一般和机械要求
+1　　　　Material Safety Data Sheet $i　　　　MSDS
+1　　　　Labels $i　　　　标签
+1　　　　Physical $i　　　　物理和机械测试
+1　　　　bite endurance $i　　　　咬力测试
+1　　　　Flammabilit $i　　　　防火测试
+1　　　　foodstuffs-Insulated $i　　　　食品接触容器
+1　　　　BPA $i　　　　双酚A
+1　　　　Color Fastness $i　　　　色牢度
+1　　　　flexible $i　　　　柔性材料
+1　　　　abuse $i　　　　滥用测试
+1　　　　(Lead|lead) $i　　　　铅
+1　　　　Platinum $i　　　　铂
+1　　　　Cadmium $i　　　　镉
+1　　　　Mercury $i　　　　汞
+1　　　　Arsenic $i　　　　砷
+1　　　　Barium $i　　　　钡
+1　　　　Chromium $i　　　　铬
+1　　　　Antimony $i　　　　锑
+1　　　　Selenium $i　　　　硒
+1　　　　Selenium $i　　　　硒
+1　　　　法规：法规：　　　　法规：
+1　　　　法规：EN[ :]+\n　　　　
+1　　　　法规：EN71　　　　法规：EN 71
+1　　　　(?<=报告：)(\w+)[）\.-](\w+)　　　　$1$2
+1　　　　(?<=报告：)(\w+)[）\.-](\w+)　　　　$1$2
+1　　　　(?<=报告：)(\w+)[）\.-](\w+)　　　　$1$2
+1　　　　(?<=报告：)(\w+)[）\.-](\w+)　　　　$1$2
+3　　　　window.result_dbc = function (data) {@@@    let is_mouse = data instanceof MouseEvent;@@@    data instanceof MouseEvent ? data = dom_result.value : 0;@@@    let the_data = data.replace(/"/g, "");@@@    let arr = the_data.split("\n").map(item => item.trim());@@@@@@    arr = [...new Set(arr)];@@@    arr.sort();@@@@@@    //国家统计;@@@    if (!is_mouse) {@@@        let country_list = {@@@            "CA65": "美国",@@@            "CPSIA": "美国",@@@            "FDA": "美国",@@@            "CPSC": "美国",@@@            "CFR": "美国",@@@            "SOR": "加拿大",@@@            "CCPSA": "加拿大",@@@            "ISED": "加拿大",@@@            "AS/NZS": "澳大利亚",@@@            "EN ": "英国",@@@            "（EC）": "欧盟",@@@            "（EU）": "欧盟",@@@            "REACH": "欧盟",@@@            "GB ": "中国",@@@        };@@@        for (let key in country_list) {@@@            the_data.indexOf(key) < 0 ? 0 : arr.push("4-国家：" + country_list[key]);@@@        };@@@    };@@@@@@@@@    // 不合格次数;@@@    if (!is_mouse) {@@@        let time_fail = (the_data.match(/5-fail/ig) || []).length;@@@        time_fail > 0 ? arr.push('5-Fail ' + time_fail + ' 次') : 0;@@@    };@@@@@@    //项目合并;@@@    let con_list = ["DBP", "BBP", "DNOP", "DINP", "DIDP", "DEHP", "DIBP", "DPENP", "DnHP", "DHEXP", "DCHP", "SCCP", "BPA"].filter(item => arr.join("").indexOf(item) > -1);@@@    let reg_key = RegExp("(" + con_list.join("|") + ")", "g");@@@    if (con_list.length > 0) {@@@        arr = arr.filter(item => String(item).match(reg_key) == null);@@@        arr.push('项目：' + con_list.join("、"));@@@    };@@@@@@    // 对日期格式处理;@@@    if (!is_mouse) {@@@        try {@@@            let mon_list = { "JAN": "01", "FEB": "02", "MAR": "03", "APR": "04", "MAY": "05", "JUN": "06", "JUL": "07", "AUG": "08", "SEP": "09", "OCT": "10", "NOV": "11", "DEC": "12" };@@@            let the_date = the_data.match(/.+日期.+/g).join("\n").replace(/(202\d)/g, "【年$1】").replace(/(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC|(?<=[^\d])\d\d?)[^\w\n]{1,3}(\d\d?)/ig, "【【月$1】】【【日$2】】");@@@            for (let key in mon_list) { the_date = the_date.replace(RegExp(key, "ig"), mon_list[key]); };@@@            the_date = the_date.match(/【[^【】]+】.*?【[^【】]+】.*?【[^【】]+】/g).filter(item => (item.indexOf("年") > 0 & item.indexOf("月") > 0 & item.indexOf("日") > 0));@@@            if (the_date) { the_date = the_date.map(item => { let y = item.match(/(?<=年)\d+/)[0] - 0; let m = item.match(/(?<=月)\d+/)[0] - 0; let d = item.match(/(?<=日)\d+/)[0] - 0; m = m - 0 < 10 ? "0" + m : m; d = d - 0 < 10 ? "0" + d : d; return "2-日期：" + y + "-" + m + "-" + d; }); arr = arr.filter(item => item.indexOf("日期") < 0); arr.push(...the_date); };@@@        } catch (error) { };@@@    };@@@@@@    arr = [...new Set(arr)];@@@    arr.sort();@@@    let result_text = arr.join("\n");@@@@@@    result_text = result_text.replace(/\t/g, " ").replace(/^\n/g, "");@@@    result_text = result_text.replace(/5-Fail\n/g, "");@@@@@@    dom_result.value = result_text;@@@    console.log("click");@@@    return result_text;@@@};@@@data = result_dbc(data);@@@@@@dom_result.ondblclick = result_dbc;@@@@@@dom_result.oncontextmenu = function (e) {@@@    let result_text = dom_result.value;@@@    result_text = result_text.replace(/\n1-编号：/g, " ");@@@    result_text = result_text.replace(/\n2-日期：/g, " ");@@@    result_text = result_text.replace(/\n3-报告：/g, "\t");@@@    result_text = result_text.replace(/\n4-国家：/g, " ");@@@    result_text = result_text.replace(/\n5-Fail/g, " Fail");@@@@@@    result_text = result_text.replace(/(?<=金属：.+?)\n金属：/g, " ");@@@    try { result_text = result_text.replace(/(?<=金属：).+/, [...new Set(result_text.match(/(?<=金属：).+/)[0].split(" "))].join(" ")); } catch (error) { };@@@@@@    dom_result.value = result_text;@@@@@@    e.preventDefault();@@@    return false;@@@};　　　　
