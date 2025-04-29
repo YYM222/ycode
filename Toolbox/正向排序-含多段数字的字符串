@@ -1,0 +1,14 @@
+function naturalSort(a, b) {
+  const regex = /(\d+)|(\D+)/g;
+  const aParts = a.match(regex), bParts = b.match(regex);
+  for (let i = 0; i < Math.min(aParts.length, bParts.length); i++) {
+    if (/\d/.test(aParts[i]) && /\d/.test(bParts[i])) {
+      if (parseInt(aParts[i]) !== parseInt(bParts[i])) 
+        return parseInt(aParts[i]) - parseInt(bParts[i]);
+    } else {
+      const cmp = aParts[i].localeCompare(bParts[i]);
+      if (cmp !== 0) return cmp;
+    }
+  }
+  return a.length - b.length;
+}
