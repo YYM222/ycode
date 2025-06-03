@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <div id="app"></div>
+    <div id="control">
+        <div>
+            <label>温度最小值：<input type="number" id="num_min" value="22"></label>
+            <label style="margin-left: 75px">温度最大值：<input type="number" id="num_max" value="25"></label>
+        </div>
+        <div>
+            <label>湿度最小值：<input type="number" id="num_min" value="53"></label>
+            <label style="margin-left: 75px">湿度最大值：<input type="number" id="num_max" value="58"></label>
+        </div>
+        <div>
+            <label>　　年　　：<input type="text" id="num_min" value="2025"></label>
+            <label style="margin-left: 75px">　　月　　：<input type="text" id="num_max" value="05"></label>
+        </div>
+        <div><label>休息日【空格隔开】：<input type="text" id="num_min" style="width: 465px;"></label></div>
+        <div><button onclick="submit()">刷新</button></div>
+    </div>
+
+    <style>
+        #app {
+            width: 1180px;
+            height: 1668px;
+            background-image: url("./温度记录表_00.png");
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-position: 0% 0%;
+        }
+
+        #control {
+            width: 700px;
+            padding: 20px;
+            background-color: #0fe4d9;
+            position: fixed;
+            top: 200px;
+            left: calc(50% - 350px);
+            z-index: 999999;
+
+            &>div {
+                margin-top: 15px;
+
+                & input {
+                    height: 25px;
+                }
+
+                &>button {
+                    min-width: 160px;
+                    height: 50px;
+                    border-radius: 14px;
+                    border: 1px rgba(53, 250, 27, 0.966);
+                    background-color: rgba(240, 255, 238, 0.966);
+                    margin-left: 10px;
+                    margin-bottom: 10px;
+                    font-size: 25px;
+                    font-weight: bold;
+                    margin-left: 270px;
+
+                    &:hover {
+                        box-shadow: 0px 0 5px 3px #888888a8;
+                    }
+
+                    &:active {
+                        box-shadow: inset 0px 0 9px 3px #88888873;
+                        color: rgba(53, 250, 27, 0.966);
+                    }
+                }
+            }
+        }
+
+        .show_control {
+            visibility: hidden;
+        }
+    </style>
+
+    <script>
+        function append_dom(el, type = "div", data = {}, position = 'end') {
+            return new Promise((resolve) => {
+                var a = document.createElement(type);
+                for (let item in data) { a[item] = data[item]; };
+                position == 'end' ? el.appendChild(a) : el.insertBefore(a, el.childNodes[0]);
+                resolve(a);
+            });
+        };
+
+        function get_number(num, heigth, left, top) {
+            let n = String(num);
+            let p = n.indexOf(".");
+            let l = n.length - (p == -1 ? 0 : 1);
+            let src = n.split("").map(item => item + "-" + (Math.floor(Math.random() * 14) + 1) + ".png");
+            let img_ = src.reduce((r, item, i, arr) => {
+                if (item.match(/\.-\d+/)) {
+                    return r + `\n<img src="./number-img/${item}" style="height:${heigth / 2}px;object-fit: contain;">`;
+                }
+                if (item.match(/0-\d+/)) {
+                    return r + `\n<img src="./number-img/${item}" style="height:${heigth * 0.7}px;object-fit: contain;">`;
+                }
+                return r + `\n<img src="./number-img/${item}" style="height:${heigth}px;object-fit: contain;">`;
+            }, "");
+
+            let img = `
+            <div class="number" style="position: absolute;left: ${left}px;top: ${top}px;display: flex;align-items: flex-end;">
+                ${img_}
+            </div>
+            `;
+            return img;
+        }
+
+        //输入最小值、最大值、位置清单、小数点位数。生成清单。
+        function num_list(min, max, count, point) {
+            let arr = [];
+            for (let i = 0; i < count; i++) {
+                arr[i] = (min + (max - min) * Math.random()).toFixed(point);
+            }
+            return arr;
+        };
+
+    </script>
+
+    <script>
+        let position_x = [393, 511, 799, 915];
+        let position_y = [303, 342, 380, 416, 454, 492, 531, 570, 609, 648, 687, 725, 763, 801, 839, 875, 907, 945, 983, 1019, 1057, 1095, 1133, 1171, 1209, 1247, 1285, 1323, 1361, 1399, 1437];
+        let day_off_5 = [1, 2, 3, 4, 5, 11, 17, 18, 24, 25, 31];
+
+        function get_dom_t(min, max, point, size, list, day_off = []) {
+            let position_list = [];
+            list[0].forEach(item_x => {
+                let arr = list[1].map((item_y, i_y) => {
+                    if (day_off.includes(i_y + 1)) { return "day_off"; }
+                    return [item_x, item_y];
+                });
+                position_list.push(...arr);
+            });
+
+            position_list = position_list.filter(item => item != "day_off");
+
+
+            let dom_t = num_list(min, max, position_list.length, point).reduce((r, item, i) => {
+                return r = r + get_number(item, size, position_list[i][0], position_list[i][1]);
+            }, "");
+
+            append_dom(document.body, "div", {
+                class: "number",
+                innerHTML: dom_t
+            });
+
+        }
+
+
+    </script>
+
+    <script>
+        let dom_control = document.querySelector("#control");
+        let dom_input = document.querySelectorAll("#control input");
+
+        document.body.oncontextmenu = function () {
+            console.log(1);
+            dom_control.classList.toggle("show_control");
+            return false;
+        };
+
+        function submit() {
+            (document.querySelectorAll(".number") || [document.createElement("div")]).forEach(item => { item.remove(); });
+            let W_min = Number(dom_input[0].value);
+            let W_max = Number(dom_input[1].value);
+            let S_min = Number(dom_input[2].value);
+            let S_max = Number(dom_input[3].value);
+            let y = dom_input[4].value;
+            let m = dom_input[5].value;
+            let day_off = dom_input[6].value.split(" ").map(item => Number(item)).filter(item => item != "");
+
+            get_dom_t(W_min, W_max, 1, 32, [[393, 799], position_y], day_off);
+            get_dom_t(S_min, S_max, 0, 32, [[511, 915], position_y], day_off);
+
+            append_dom(document.body, "div", { innerHTML: get_number(y, 30, 145, 145) + get_number(m, 30, 255, 145) });
+        }
+    </script>
+</body>
+
+</html>
