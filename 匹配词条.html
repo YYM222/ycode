@@ -1,111 +1,143 @@
+<html version="4">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
 <body>
   <meta name="viewport"
-    content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover" />
+    content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
   <div id="control">
     <button onclick="PPP()">筛选</button>
+    <button onclick="PPP_2()">连续筛选</button>
+    <button onclick="DDD()">复制上一次结果</button>
     <button onclick="CCC()">清除本地缓存</button>
-    <button onclick="DDD()">复制不重复的数据</button>
     <button onclick="EEE()">复制缓存数据</button>
   </div>
   <textarea id="result"></textarea>
-</body>
-<style>
-  #result {
-    width: 90%;
-    height: 60%;
-  }
 
-  #control {
-    margin: 5% 0%;
-
-    &>button {
-      margin: 0% 0.5%;
-      height: 10%;
-      min-width: 30%;
-      padding: 5%;
-      line-height: 10%;
-      font-size: 2em;
-      background-color: #4ad545;
-      white-space: nowrap;
+  <style>
+    #result {
+      width: 90%;
+      height: 60%;
     }
-  }
-</style>
 
-<script>
-  //模拟复制按钮设置数据
-  let copy_simula = function (data) {
-    let copy_data = function () {
-      if (event.clipboardData || event.originalEvent) {
-        var clipboardData = (event.clipboardData || event.originalEvent.clipboardData);
-        clipboardData.setData('text/plain', data);
-        event.preventDefault();
+    #control {
+      margin: 5% 0%;
+
+      &>button {
+        margin: 0% 0.5%;
+        height: 10%;
+        min-width: 30%;
+        padding: 5%;
+        line-height: 10%;
+        font-size: 2em;
+        background-color: #4ad545;
+        white-space: nowrap;
+      }
+    }
+  </style>
+
+  <script>
+    //模拟复制按钮设置数据
+    let copy_simula = function (data) {
+      let copy_data = function () {
+        if (event.clipboardData || event.originalEvent) {
+          var clipboardData = (event.clipboardData || event.originalEvent.clipboardData);
+          clipboardData.setData('text/plain', data);
+          event.preventDefault();
+        }
+      };
+
+      let origina_copy = event => { event.stopPropagation(); event.preventDefault(); };
+      document.addEventListener('copy', origina_copy, true);
+      document.addEventListener("copy", copy_data, true);
+      document.execCommand("copy");
+      document.removeEventListener("copy", copy_data, true);
+      document.removeEventListener("copy", origina_copy, true);
+
+    };
+
+    let dom_result = document.querySelector("#result");
+    let result_data = "";
+    let result_data_2 = "";
+
+    let result = [];
+    let is_continuous = false;
+
+
+    let PPPP = function (data) {
+
+      let result_old = JSON.parse(localStorage.getItem("result")) || [];
+      result = [];
+
+      dom_result.value = result_old.join("\n");
+
+      data = data.match(/[\w+-=_\?]{18,199}/g);
+      data = [...new Set(data)];
+
+      data.forEach(item => {
+        result_old.includes(item) ? 0 : (result.push(item), result_old.push(item));
+      });
+
+      localStorage.setItem("result", JSON.stringify(result_old));
+      dom_result.value = result_old.join("\n");
+
+      result_data = result.join("\n");
+
+      if (is_continuous) {
+        result_data_2 += "\n" + result_data;
+        copy_simula(result_data_2);
+        alert(result_data_2.split("\n").length);
+
+        console.log(is_continuous);
+        console.log(result_data);
+        console.log(result_data_2);
+      } else {
+        result_data_2 = "";
+        copy_simula(result_data);
+        alert(result.length);
+      };
+
+      is_continuous = false;
+    };
+
+    let PPP = async () => {
+      let data = "";
+      try {
+        const clipboardData = await navigator.clipboard.readText();
+        data = clipboardData;
+      } catch (error) {
+        data = prompt();
+      }
+
+      await PPPP(data);
+    };
+
+    let PPP_2 = function () {
+      is_continuous = true;
+      PPP();
+    };
+
+
+
+    CCC = function () {
+      if (confirm()) {
+        localStorage.clear();
       }
     };
 
-    let origina_copy = event => { event.stopPropagation(); event.preventDefault() };
-    document.addEventListener('copy', origina_copy, true);
-    document.addEventListener("copy", copy_data, true);
-    document.execCommand("copy");
-    document.removeEventListener("copy", copy_data, true);
-    document.removeEventListener("copy", origina_copy, true);
+    DDD = function () {
+      copy_simula(result_data);
+      alert(result.length);
+    };
 
-  }
-
-  let dom_result = document.querySelector("#result");
-  let result_data = "";
-
-
-  let PPPP = function (data) {
-
-    let result_old = JSON.parse(localStorage.getItem("result")) || [];
-    let result = [];
-
-    dom_result.value = result_old.join("\n");
-
-    data = data.match(/[\w+-=_\?]{18,199}/g);
-    data = [...new Set(data)];
-
-    data.forEach(item => {
-      result_old.includes(item) ? 0 : (result.push(item), result_old.push(item));
-    })
-
-    localStorage.setItem("result", JSON.stringify(result_old));
-    dom_result.value = result_old.join("\n");
-
-    result_data = result.join("\n");
-    copy_simula(result_data);
-    alert(result.length);
-  }
-
-  let PPP = async () => {
-    let data = "";
-    try {
-      const clipboardData = await navigator.clipboard.readText();
-      data = clipboardData;
-    } catch (error) {
-      data = prompt();
+    EEE = function () {
+      copy_simula(dom_result.value);
     }
 
-    await PPPP(data)
-  }
 
+  </script>
+</body>
 
-
-
-
-  CCC = function () {
-    if (confirm()) {
-      localStorage.clear();
-    }
-  }
-
-  DDD = function () {
-    copy_simula(result_data);
-  }
-
-  EEE = function () {
-    copy_simula(dom_result.value);
-  }
-
-
-</script>
+</html>
