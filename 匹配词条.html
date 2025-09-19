@@ -86,15 +86,12 @@
       result_data = result.join("\n");
 
       if (is_continuous) {
-        result_data_2 += "\n" + result_data;
+        result_data_2 == "" ? result_data_2 = result_data : result_data_2 += "\n" + result_data;
+        result_data_2 = result_data_2.replace(/\n+/g, "\n");
         copy_simula(result_data_2);
         alert(result_data_2.split("\n").length);
-
-        console.log(is_continuous);
-        console.log(result_data);
-        console.log(result_data_2);
       } else {
-        result_data_2 = "";
+        result_data_2 = result_data;
         copy_simula(result_data);
         alert(result.length);
       };
